@@ -17,7 +17,7 @@ export default function LoginScreen({ navigation }) {
         await AsyncStorage.setItem('accessToken', accessToken);
         // Lưu role dưới dạng JSON (vì role là array)
         await AsyncStorage.setItem('role', JSON.stringify(role));
-        
+
         // Nếu role là mảng và có chứa "ADMIN", chuyển về AdminTab, ngược lại là CustomerTab
         if (Array.isArray(role) && role.includes("ADMIN")) {
           navigation.replace('AdminTab');
