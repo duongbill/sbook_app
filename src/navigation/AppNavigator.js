@@ -52,14 +52,17 @@ export default function AppNavigator() {
   }
 
   return (
+    // <NavigationContainer>
+    //   {userToken == null ? (
+    //     <AuthStack />
+    //   ) : (Array.isArray(userRole) && userRole.includes("ADMIN")) ? (
+    //     <AdminTabNavigator />
+    //   ) : (
+    //     <CustomerTabNavigator />
+    //   )}
+    // </NavigationContainer>
     <NavigationContainer>
-      {userToken == null ? (
-        <AuthStack />
-      ) : (Array.isArray(userRole) && userRole.includes("ADMIN")) ? (
-        <AdminTabNavigator />
-      ) : (
-        <CustomerTabNavigator />
-      )}
+      <CustomerTabNavigator />
     </NavigationContainer>
   );
 }
