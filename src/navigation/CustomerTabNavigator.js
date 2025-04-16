@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from '../context/ThemeContext';
 import SettingStackNavigator from './SettingStackNavigator';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import MyBookScreen from '../screens/user/MyBookScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +26,18 @@ export default function CustomerTabNavigator() {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarIcon: ({ color, size }) => {
-          let iconName = route.name === 'Customer' ? 'home-outline' : 'person-outline';
+          let iconName;
+          switch (route.name) {
+            case 'Trang Chủ':
+              iconName = 'home-outline';
+              break;
+            case 'Cài đặt':
+              iconName = 'settings-outline';
+              break;
+            case 'Sách của tôi':
+              iconName = 'book-outline';
+              break;
+          }
           return <Icon name={iconName} size={size} color={color} />;
         },
         tabBarStyle: {
@@ -58,7 +70,8 @@ export default function CustomerTabNavigator() {
         },
       })}
     >
-      <Tab.Screen name="Customer" component={CustomerScreen} />
+      <Tab.Screen name="Trang Chủ" component={CustomerScreen} />
+      <Tab.Screen name="Sách của tôi" component={MyBookScreen} />
       <Tab.Screen name="Cài đặt" component={SettingStackNavigator}/>
     </Tab.Navigator>
   );

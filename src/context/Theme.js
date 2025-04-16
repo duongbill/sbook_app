@@ -1,13 +1,13 @@
 export const LightTheme = {
   mode: 'light',
   colors: {
-    background: '#F1E7E7', 
-    surface: '#B9C9ED',
-    text: '#22092C',
+    background: '#FFFFF', 
+    surface: '#FFF2BC',
+    text: '#543A14',
     textSecondary: '#555555',
     border: '#E0DED9',
     primary: '#3A59D1',
-    buttonSecondary: '#DADADA',
+    buttonSecondary: '#E4E0E1',
     bottomTabColor: '#E1DBCA',
   },
   font: {
@@ -26,7 +26,7 @@ export const DarkTheme = {
     textSecondary: '#FFF0DA',
     border: '#2A2A2A',
     primary: '#08A7A2',
-    buttonSecondary: '#818FB4',
+    buttonSecondary: '#543A14',
     bottomTabColor: '#3F4F44',
   },
   font: {

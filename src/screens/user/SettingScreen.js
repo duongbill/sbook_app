@@ -48,7 +48,7 @@ const SettingScreen = () => {
               } else if (item.label === 'Chế độ tối') {
                 navigation.navigate('Mode');
               } else {
-                navigation.navigate(item.label);
+                navigation.navigate('Setting');
               }
             }}>
             <View style={styles.iconLabel}>
