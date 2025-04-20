@@ -22,6 +22,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/home/HomeScreen";
 import DiscoveryScreen from "./screens/discovery/DiscoveryScreen";
 import DiscoveryCardChild from "./components/DiscoveryCardChild";
+import GachaScreen from "./screens/gacha/GachaScreen";
 // import BookmarkScreen from './screens/BookmarkScreen';
 // import ProfileScreen from './screens/ProfileScreen';
 
@@ -42,6 +43,7 @@ const App = () => {
               name="DiscoveryCardChild"
               component={DiscoveryCardChild}
             />
+            <Stack.Screen name="GachaScreen" component={GachaScreen} />
             {/* <Stack.Screen name="BookmarkScreen" component={BookmarkScreen} />
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
           </Stack.Navigator>
