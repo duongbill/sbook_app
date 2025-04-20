@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const BookCard = () => (
+const BookCard = ({ title, author, image }) => (
     <View style={styles.bookCard}>
-        <Image source={{ uri: 'https://placehold.co/80/png' }} style={styles.bookImage} />
-        <Text style={styles.bookTitleSmall}>Come home to yourself</Text>
-        <Text style={styles.bookAuthor}>by Bill</Text>
+        <Image source={{ uri: image }} style={styles.bookImage} />
+        <Text style={styles.bookTitleSmall}>{title}</Text>
+        <Text style={styles.bookAuthor}>by {author}</Text>
     </View>
 );
 

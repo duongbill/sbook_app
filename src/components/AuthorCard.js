@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const AuthorCard = ({ name }) => (
+const AuthorCard = ({ img, name }) => (
     <View style={styles.authorCard}>
-        <Image source={{ uri: 'https://placehold.co/50/png' }} style={styles.authorImage} />
+        <Image source={{ uri: img }} style={styles.authorImage} />
         <Text style={styles.authorName} numberOfLines={2}>{name}</Text>
     </View>
 );
