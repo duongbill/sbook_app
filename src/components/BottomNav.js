@@ -38,7 +38,7 @@ const navItems = [
     label: "Tôi",
     iconLib: Ionicons,
     iconName: "person-outline",
-    screen: "ProfileScreen",
+    screen: "SettingScreen",
   },
 ];
 
