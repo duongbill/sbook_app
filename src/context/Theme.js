@@ -2,13 +2,20 @@ export const LightTheme = {
   mode: 'light',
   colors: {
     background: '#FFFFF', 
-    surface: '#FFF2BC',
+    surface: '#FFFBEB',
     text: '#543A14',
     textSecondary: '#555555',
     border: '#E0DED9',
     primary: '#3A59D1',
     buttonSecondary: '#E4E0E1',
     bottomTabColor: '#E1DBCA',
+    buttonBlue: '#97E0FF',
+    buttonOrange: '#FFE16B',
+
+    white: '#FFFFFF',
+    orange: '#FCC900',
+    red: '#A80000',
+    
   },
   font: {
     family: 'Roboto',
