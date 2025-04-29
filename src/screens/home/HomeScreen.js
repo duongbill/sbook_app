@@ -1,69 +1,122 @@
-import React from 'react';
-import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import { View, Text, ScrollView, Image, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Section from '../../components/Section';
 import BookCard from '../../components/BookCard';
 import BookListItem from '../../components/BookListItem';
 import AuthorCard from '../../components/AuthorCard';
 import GenreCard from '../../components/GenreCard';
-import BottomNav from '../../components/BottomNav';
+import { ThemeContext } from '../../context/ThemeContext';
+import {
+    getPopularBooks,
+    getAuthors,
+    getGenres,
+    getNewBooks,
+    getBooksByGenre,
+} from '../../api/api';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
+    const { theme } = useContext(ThemeContext); // Get the theme from context
+
+    const [popularBooks, setPopularBooks] = useState([]);
+    const [authors, setAuthors] = useState([]);
+    const [genres, setGenres] = useState([]);
+    const [newBooks, setNewBooks] = useState([]);
+    const [businessBooks, setBusinessBooks] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [popular, authorsData, genreData, newB, business] = await Promise.all([
+                    getPopularBooks(),
+                    getAuthors(),
+                    getGenres(),
+                    getNewBooks(),
+                    getBooksByGenre('Kinh doanh'),
+                ]);
+
+                setPopularBooks(popular);
+                setAuthors(authorsData);
+                setGenres(genreData);
+                setNewBooks(newB);
+                setBusinessBooks(business);
+            } catch (err) {
+                console.error('Lỗi khi lấy dữ liệu:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <View style={[styles.loadingContainer, { backgroundColor: theme.colors.background }]}>
+                <ActivityIndicator size="large" color={theme.colors.text} />
+            </View>
+        );
+    }
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             {/* Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, { backgroundColor: theme.colors.surface }]}>
                 <Image source={{ uri: 'https://placehold.co/40/png' }} style={styles.avatar} />
-                <Text style={styles.greeting}>Xin chào, Duy Anh</Text>
-                <Feather name="search" size={24} color="black" style={styles.searchIcon} />
+                <Text style={[styles.greeting, { color: theme.colors.text }]}>Xin chào, Duy Anh</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('SearchTab', { screen: 'Search' })}>
+                    <Feather name="search" size={24} color={theme.colors.text} style={styles.searchIcon} />
+                </TouchableOpacity>
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Section title="Sách phổ biến">
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        {Array(2).fill(null).map((_, i) => (
-                            <BookCard key={i} />
+                        {popularBooks.map((book) => (
+                            <BookCard key={book.id} title={book.title} author={book.author} image={book.image} />
                         ))}
                     </ScrollView>
                 </Section>
 
                 <Section title="Tác giả nổi tiếng">
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        {['Đặng Lê Nguyên Vũ', 'Nguyễn Nhật Ánh', 'Minh Long'].map((name, i) => (
-                            <AuthorCard key={i} name={name} />
+                        {authors.map((author) => (
+                            <AuthorCard key={author.id} img={author.image} name={author.name} />
                         ))}
                     </ScrollView>
                 </Section>
 
                 <Section title="Thể loại">
                     <View style={styles.genreRow}>
-                        <GenreCard title="Sách kinh doanh" />
-                        <GenreCard title="Sách kỹ năng" />
+                        {genres.map((genre) => (
+                            <GenreCard key={genre.id} title={genre.name} />
+                        ))}
                     </View>
                 </Section>
 
                 <Section title="Sách mới">
-                    {Array(3).fill(null).map((_, i) => (
+                    {newBooks.map((book) => (
                         <BookListItem
-                            key={i}
-                            image="https://placehold.co/80/png"
-                            title="Come home to yourself"
-                            author="Bill"
-                            rating={4.5}
-                            description="This is a brief description of the book, showing some content."
+                            key={book.id}
+                            image={book.image}
+                            title={book.title}
+                            author={book.author}
+                            rating={book.rating}
+                            description={book.description}
                         />
                     ))}
                 </Section>
 
                 <Section title="Sách kinh doanh">
-                    {Array(3).fill(null).map((_, i) => (
+                    {businessBooks.map((book) => (
                         <BookListItem
-                            key={i}
-                            image="https://placehold.co/80/png"
-                            title="Come home to yourself"
-                            author="Bill"
-                            rating={4.5}
-                            description="This is a brief description of the book, showing some content."
+                            key={book.id}
+                            image={book.image}
+                            title={book.title}
+                            author={book.author}
+                            rating={book.rating}
+                            description={book.description}
                         />
                     ))}
                 </Section>
@@ -75,14 +128,16 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         paddingTop: 50,
         paddingHorizontal: 16,
+        paddingBottom: 60,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 16,
+        padding: 10,
+        borderRadius: 8,
     },
     avatar: {
         width: 40,
@@ -101,6 +156,12 @@ const styles = StyleSheet.create({
     genreRow: {
         flexDirection: 'row',
         gap: 12,
+        flexWrap: 'wrap',
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
