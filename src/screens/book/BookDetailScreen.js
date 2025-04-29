@@ -9,7 +9,7 @@ import {
 import IntroTab from '../../components/IntroTab';
 import ChapterTab from '../../components/ChapterTab';
 import ReviewTab from '../../components/ReviewTab';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { ThemeContext } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Image } from 'react-native';
@@ -29,7 +29,11 @@ const BookDetailScreen = () => {
   const { theme } = useContext(ThemeContext);
   const [activeTab, setActiveTab] = useState('intro');
   const categories = ['Tình cảm', 'Chữa lành', 'Tâm lý'];
+  const route = useRoute();
+  const { bookId } = route.params;
 
+  console.log('Book ID:', bookId);
+  
   const renderTabContent = () => {
     switch (activeTab) {
       case 'intro':

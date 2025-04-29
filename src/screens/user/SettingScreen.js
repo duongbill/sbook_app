@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { View, Text, Pressable, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { ThemeContext } from '../../context/ThemeContext';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const settings = [
   { icon: 'person-outline', label: 'Thông tin cá nhân' },
@@ -17,8 +18,19 @@ const settings = [
 ];
 
 const SettingScreen = () => {
-  const { themeMode, setTheme, theme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const navigation = useNavigation();
+
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('userToken');
+      console.log('Token removed, logged out successfully.');
+  
+      navigation.replace('Login');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -43,8 +55,7 @@ const SettingScreen = () => {
             style={[styles.item, {borderBottomColor: theme.colors.text}]}
             onPress={() => {
               if (item.label === 'Đăng xuất') {
-                // Handle logout logic here
-                console.log('Logged out');
+                handleLogout();
               } else if (item.label === 'Chế độ tối') {
                 navigation.navigate('Mode');
               } else {

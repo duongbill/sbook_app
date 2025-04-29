@@ -12,18 +12,12 @@ export default function LoginScreen({ navigation }) {
     try {
       const res = await login(email, password);
       // Kiểm tra mã code thành công
-      if (res.code === 1000 && res.result && res.result.accessToken && res.result.role) {
-        const { accessToken, role } = res.result;
+      if (res.code === 1000 && res.result && res.result.accessToken) {
+        const { accessToken} = res.result;
         await AsyncStorage.setItem('accessToken', accessToken);
-        // Lưu role dưới dạng JSON (vì role là array)
-        await AsyncStorage.setItem('role', JSON.stringify(role));
 
-        // Nếu role là mảng và có chứa "ADMIN", chuyển về AdminTab, ngược lại là CustomerTab
-        if (Array.isArray(role) && role.includes("ADMIN")) {
-          navigation.replace('AdminTab');
-        } else {
-          navigation.replace('CustomerTab');
-        }
+        console.log('Đăng nhập thành công:', accessToken);
+        navigation.replace('CustomerTab', { screen: 'Home' });
       } else {
         Alert.alert('Lỗi', 'Thông tin đăng nhập không hợp lệ');
       }

@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CustomerScreen from '../screens/user/CustomerScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from '../context/ThemeContext';
-import SettingStackNavigator from './SettingStackNavigator';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import MyBookScreen from '../screens/user/MyBookScreen';
 import HomeScreen from '../screens/home/HomeScreen';
-import BookDetailScreen from '../screens/book/BookDetail';
 import LibraryScreen from '../screens/book/LibraryScreen';
+import SettingScreen from '../screens/user/SettingScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -75,7 +72,7 @@ export default function CustomerTabNavigator() {
     >
       <Tab.Screen name="Trang Chủ" component={HomeScreen} />
       <Tab.Screen name="Sách của tôi" component={LibraryScreen} />
-      <Tab.Screen name="Cài đặt" component={SettingStackNavigator}/>
+      <Tab.Screen name="Cài đặt" component={SettingScreen}/>
     </Tab.Navigator>
   );
 }
