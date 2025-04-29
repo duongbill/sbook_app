@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { ThemeContext } from '../context/ThemeContext';
 
-const BookCard = ({ title, author, image }) => (
-    <View style={styles.bookCard}>
-        <Image source={{ uri: image }} style={styles.bookImage} />
-        <Text style={styles.bookTitleSmall}>{title}</Text>
-        <Text style={styles.bookAuthor}>by {author}</Text>
-    </View>
-);
+const BookCard = ({ title, author, image }) => {
+    const { theme } = useContext(ThemeContext);
+
+    return (
+        <View style={styles.bookCard}>
+            <Image source={{ uri: image }} style={styles.bookImage} />
+            <Text style={[styles.bookTitleSmall, { color: theme.colors.text }]}>
+                {title}
+            </Text>
+            <Text style={[styles.bookAuthor, { color: theme.colors.textSecondary }]}>
+                by {author}
+            </Text>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     bookCard: {
@@ -26,7 +35,6 @@ const styles = StyleSheet.create({
     },
     bookAuthor: {
         fontSize: 12,
-        color: 'gray',
     },
 });
 

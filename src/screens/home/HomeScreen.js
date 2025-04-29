@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import { View, Text, ScrollView, Image, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Section from '../../components/Section';
 import BookCard from '../../components/BookCard';
 import BookListItem from '../../components/BookListItem';
 import AuthorCard from '../../components/AuthorCard';
 import GenreCard from '../../components/GenreCard';
+import { ThemeContext } from '../../context/ThemeContext';
 import {
     getPopularBooks,
     getAuthors,
@@ -14,7 +15,9 @@ import {
     getBooksByGenre,
 } from '../../api/api';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
+    const { theme } = useContext(ThemeContext); // Get the theme from context
+
     const [popularBooks, setPopularBooks] = useState([]);
     const [authors, setAuthors] = useState([]);
     const [genres, setGenres] = useState([]);
@@ -50,19 +53,21 @@ const HomeScreen = () => {
 
     if (loading) {
         return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#000" />
+            <View style={[styles.loadingContainer, { backgroundColor: theme.colors.background }]}>
+                <ActivityIndicator size="large" color={theme.colors.text} />
             </View>
         );
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             {/* Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, { backgroundColor: theme.colors.surface }]}>
                 <Image source={{ uri: 'https://placehold.co/40/png' }} style={styles.avatar} />
-                <Text style={styles.greeting}>Xin chào, Duy Anh</Text>
-                <Feather name="search" size={24} color="black" style={styles.searchIcon} />
+                <Text style={[styles.greeting, { color: theme.colors.text }]}>Xin chào, Duy Anh</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('SearchTab', { screen: 'Search' })}>
+                    <Feather name="search" size={24} color={theme.colors.text} style={styles.searchIcon} />
+                </TouchableOpacity>
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -123,7 +128,6 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         paddingTop: 50,
         paddingHorizontal: 16,
         paddingBottom: 60,
@@ -132,6 +136,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 16,
+        padding: 10,
+        borderRadius: 8,
     },
     avatar: {
         width: 40,

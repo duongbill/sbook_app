@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { ThemeContext } from '../context/ThemeContext';
 
-const AuthorCard = ({ img, name }) => (
-    <View style={styles.authorCard}>
-        <Image source={{ uri: img }} style={styles.authorImage} />
-        <Text style={styles.authorName} numberOfLines={2}>{name}</Text>
-    </View>
-);
+const AuthorCard = ({ img, name }) => {
+    const { theme } = useContext(ThemeContext);
+
+    return (
+        <View style={styles.authorCard}>
+            <Image source={{ uri: img }} style={styles.authorImage} />
+            <Text
+                style={[styles.authorName, { color: theme.colors.text }]}
+                numberOfLines={2}
+            >
+                {name}
+            </Text>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     authorCard: {
