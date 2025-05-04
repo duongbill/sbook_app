@@ -6,6 +6,9 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import HomeScreen from '../screens/home/HomeScreen';
 import LibraryScreen from '../screens/book/LibraryScreen';
 import SettingScreen from '../screens/user/SettingScreen';
+import DiscoveryScreen from '../screens/discovery/DiscoveryScreen';
+import SearchStack from './SearchStack';
+import SettingStackNavigator from './SettingStackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,10 +45,8 @@ export default function CustomerTabNavigator() {
         },
         tabBarStyle: {
           position: 'absolute',
-          bottom: 10,
           marginLeft: 18,
           marginRight: 18,
-          marginBottom: 14,
           elevation: 5,
           backgroundColor: theme.colors.bottomTabColor,
           borderRadius: 20,
@@ -72,7 +73,9 @@ export default function CustomerTabNavigator() {
     >
       <Tab.Screen name="Trang Chủ" component={HomeScreen} />
       <Tab.Screen name="Sách của tôi" component={LibraryScreen} />
-      <Tab.Screen name="Cài đặt" component={SettingScreen}/>
+      <Tab.Screen name="Khám Phá" component={DiscoveryScreen} />
+      <Tab.Screen name="Tìm Kiếm" component={SearchStack} />
+      <Tab.Screen name="Cài đặt" component={SettingStackNavigator}/>
     </Tab.Navigator>
   );
 }

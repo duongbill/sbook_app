@@ -12,7 +12,7 @@ import {
 import { ThemeContext } from "../../context/ThemeContext";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../../context/AuthContext";
 
 const settings = [
   { icon: "person-outline", label: "Thông tin cá nhân" },
@@ -28,6 +28,7 @@ const settings = [
 
 const SettingScreen = () => {
   const { theme } = useContext(ThemeContext);
+  const { logout } = useContext(AuthContext);
   const navigation = useNavigation();
   const [supportModalVisible, setSupportModalVisible] = useState(false);
 
@@ -41,14 +42,7 @@ const SettingScreen = () => {
   };
 
   const handleLogout = async () => {
-    try {
-      await AsyncStorage.removeItem("userToken");
-      console.log("Token removed, logged out successfully.");
-
-      navigation.replace("Login");
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
+    await logout();
   };
 
   return (
@@ -94,7 +88,7 @@ const SettingScreen = () => {
             style={[styles.item, { borderBottomColor: theme.colors.text }]}
             onPress={() => {
               if (item.label === "Đăng xuất") {
-                // Handle logout logic here
+                handleLogout();
                 console.log("Logged out");
               } else if (item.label === "Chế độ tối") {
                 navigation.navigate("Mode");
@@ -227,10 +221,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
-    marginTop: 50,
     marginLeft: 18,
     marginRight: 18,
-    marginBottom: 60,
+    marginBottom: 10,
   },
   profileContainer: {
     borderRadius: 12,

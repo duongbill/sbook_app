@@ -1,28 +1,26 @@
 // src/screens/Auth/LoginScreen.js
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, Button, Alert, TouchableOpacity, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { login } from '../../api/auth';
+import { loginApi } from '../../api/auth';
+import { AuthContext } from '../../context/AuthContext';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {login} = useContext(AuthContext);
 
   const handleLogin = async () => {
     try {
-      const res = await login(email, password);
+      const res = await loginApi(email, password);
       // Kiểm tra mã code thành công
       if (res.code === 1000 && res.result && res.result.accessToken) {
         const { accessToken} = res.result;
-        await AsyncStorage.setItem('accessToken', accessToken);
-
-        console.log('Đăng nhập thành công:', accessToken);
-        navigation.replace('CustomerTab', { screen: 'Home' });
+        login(accessToken);
       } else {
         Alert.alert('Lỗi', 'Thông tin đăng nhập không hợp lệ');
       }
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
       Alert.alert('Lỗi', 'Đăng nhập thất bại');
     }
   };
