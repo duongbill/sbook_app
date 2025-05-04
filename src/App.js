@@ -27,6 +27,8 @@ import GachaScreen from "./screens/gacha/GachaScreen";
 import SettingStackNavigator from "./navigation/SettingStackNavigator";
 import InfoAuthorScreen from "./screens/author/InfoAuthorScreen";
 import SearchStack from "./navigation/SearchStack";
+import LibraryScreen from "./screens/book/LibraryScreen";
+import BookDetailScreen from "./screens/book/BookDetailScreen";
 // import BookmarkScreen from './screens/BookmarkScreen';
 // import ProfileScreen from './screens/ProfileScreen';
 
@@ -61,6 +63,8 @@ const App = () => {
                 component={InfoAuthorScreen}
               />
               <Stack.Screen name="SearchStack" component={SearchStack} />
+              <Stack.Screen name="LibraryScreen" component={LibraryScreen} />
+              <Stack.Screen name="BookDetail" component={BookDetailScreen} />
               {/* <Stack.Screen name="BookmarkScreen" component={BookmarkScreen} />
               <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
             </Stack.Navigator>
@@ -80,3 +84,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export default App;

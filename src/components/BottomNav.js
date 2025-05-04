@@ -16,7 +16,7 @@ const navItems = [
     label: "Sách của tôi",
     iconLib: Ionicons,
     iconName: "bookmark-outline",
-    screen: "BookmarkScreen",
+    screen: "LibraryScreen",
   },
   {
     name: "discovery",
@@ -32,7 +32,6 @@ const navItems = [
     iconName: "search",
     screen: "SearchStack",
   },
-
   {
     name: "person",
     label: "Tôi",
