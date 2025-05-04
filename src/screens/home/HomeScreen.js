@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, ScrollView, Image, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useContext, useRef } from 'react';
+import { View, Text, ScrollView, Image, StyleSheet, ActivityIndicator, TouchableOpacity, Animated } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Section from '../../components/Section';
 import BookCard from '../../components/BookCard';
@@ -7,6 +7,7 @@ import BookListItem from '../../components/BookListItem';
 import AuthorCard from '../../components/AuthorCard';
 import GenreCard from '../../components/GenreCard';
 import { ThemeContext } from '../../context/ThemeContext';
+
 import {
     getPopularBooks,
     getAuthors,
@@ -16,7 +17,7 @@ import {
 } from '../../api/api';
 
 const HomeScreen = ({ navigation }) => {
-    const { theme } = useContext(ThemeContext); // Get the theme from context
+    const { theme } = useContext(ThemeContext);
 
     const [popularBooks, setPopularBooks] = useState([]);
     const [authors, setAuthors] = useState([]);
@@ -24,6 +25,14 @@ const HomeScreen = ({ navigation }) => {
     const [newBooks, setNewBooks] = useState([]);
     const [businessBooks, setBusinessBooks] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const scrollY = useRef(new Animated.Value(0)).current;
+
+    const headerTranslateY = scrollY.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, -120],
+        extrapolate: 'clamp',
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,15 +71,32 @@ const HomeScreen = ({ navigation }) => {
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             {/* Header */}
-            <View style={[styles.header, { backgroundColor: theme.colors.surface }]}>
+            <Animated.View
+                style={[
+                    styles.header,
+                    {
+                        backgroundColor: theme.colors.surface,
+                        transform: [{ translateY: headerTranslateY }],
+                    },
+                ]}
+            >
                 <Image source={{ uri: 'https://placehold.co/40/png' }} style={styles.avatar} />
                 <Text style={[styles.greeting, { color: theme.colors.text }]}>Xin chào, Duy Anh</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('SearchTab', { screen: 'Search' })}>
                     <Feather name="search" size={24} color={theme.colors.text} style={styles.searchIcon} />
                 </TouchableOpacity>
-            </View>
+            </Animated.View>
 
-            <ScrollView showsVerticalScrollIndicator={false}>
+            {/* Scrollable Content */}
+            <Animated.ScrollView
+                contentContainerStyle={{ paddingTop: 120, paddingBottom: 60, paddingHorizontal: 16 }}
+                showsVerticalScrollIndicator={false}
+                onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+                    { useNativeDriver: true }
+                )}
+                scrollEventThrottle={16}
+            >
                 <Section title="Sách phổ biến">
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                         {popularBooks.map((book) => (
@@ -120,7 +146,7 @@ const HomeScreen = ({ navigation }) => {
                         />
                     ))}
                 </Section>
-            </ScrollView>
+            </Animated.ScrollView>
         </View>
     );
 };
@@ -128,14 +154,15 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 50,
-        paddingHorizontal: 16,
-        paddingBottom: 60,
     },
     header: {
+        position: 'absolute',
+        top: 40,
+        left: 10,
+        right: 10,
+        zIndex: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 16,
         padding: 10,
         borderRadius: 8,
     },
