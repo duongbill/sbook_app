@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+import React from 'react';
+import AppNavigator from './navigation/AppNavigator';
+import { ThemeProvider } from './context/ThemeContext';
+
+export default function App() {
+  return (
+      <ThemeProvider>
+        <AppNavigator />
+      </ThemeProvider>
+
+  );
+}
+=======
 // import React from 'react';
 // import AppNavigator from './navigation/AppNavigator';
 // import AuthStack from './navigation/AuthStack';
@@ -82,3 +96,4 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+>>>>>>> 54541d345619060511b1570379620cd26233e764

@@ -3,44 +3,25 @@ import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthStack from './AuthStack';
-import AdminTabNavigator from './AdminTabNavigator';
 import CustomerTabNavigator from './CustomerTabNavigator';
+import { createStackNavigator } from '@react-navigation/stack';
+import BookDetailScreen from '../screens/book/BookDetailScreen';
+import ModeScreen from '../screens/user/ModeScreen';
+
+const RootStack = createStackNavigator();
 
 export default function AppNavigator() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
-  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    const bootstrapAsync = async () => {
-      try {
-        // Lấy token
-        const token = await AsyncStorage.getItem('accessToken');
-
-        // Lấy role và parse thành mảng nếu có
-        const roleString = await AsyncStorage.getItem('role');
-        let parsedRole = null;
-        if (roleString) {
-          try {
-            parsedRole = JSON.parse(roleString);
-          } catch (error) {
-            console.error("Lỗi parse role:", error);
-          }
-        }
-
-        // Cập nhật state
-        setUserToken(token);
-        setUserRole(parsedRole);
-
-        // Log thông tin sau khi lấy được dữ liệu
-        console.log("Token:", token, "Role:", parsedRole);
-      } catch (e) {
-        console.error('Error restoring token:', e);
-      }
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem('userToken');
+      setUserToken(token);
       setIsLoading(false);
     };
 
-    bootstrapAsync();
+    checkToken();
   }, []);
 
   if (isLoading) {
@@ -52,17 +33,18 @@ export default function AppNavigator() {
   }
 
   return (
-    // <NavigationContainer>
-    //   {userToken == null ? (
-    //     <AuthStack />
-    //   ) : (Array.isArray(userRole) && userRole.includes("ADMIN")) ? (
-    //     <AdminTabNavigator />
-    //   ) : (
-    //     <CustomerTabNavigator />
-    //   )}
-    // </NavigationContainer>
     <NavigationContainer>
-      <CustomerTabNavigator />
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        {userToken == null ? (
+          <RootStack.Screen name="Auth" component={AuthStack} />
+        ) : (
+          <RootStack.Screen name="Customer" component={CustomerTabNavigator} />
+        )}
+
+        {/* Màn hình dùng chung toàn app */}
+        <RootStack.Screen name="BookDetail" component={BookDetailScreen} options={{tabBarStyle: { display: 'none' }}}/>
+        <RootStack.Screen name="Mode" component={ModeScreen} options={{tabBarStyle: { display: 'none' }}}/>
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 }
