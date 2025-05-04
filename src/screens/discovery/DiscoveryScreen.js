@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -12,13 +12,17 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import DiscoveryCard from "../../components/DiscoveryCard";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const DiscoveryScreen = () => {
   const navigation = useNavigation();
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <Text style={styles.title}>Khám Phá</Text>
+    <SafeAreaView
+      style={[styles.safeArea, { backgroundColor: theme.colors.background }]}
+    >
+      <Text style={[styles.title, { color: theme.colors.text }]}>Khám Phá</Text>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Hiển thị nhiều DiscoveryCard */}
@@ -28,17 +32,22 @@ const DiscoveryScreen = () => {
 
         {/* Gacha button */}
         <TouchableOpacity
-          style={styles.gachaButton}
+          style={[
+            styles.gachaButton,
+            { backgroundColor: theme.colors.bottomTabColor },
+          ]}
           onPress={() => navigation.navigate("GachaScreen")}
           activeOpacity={0.8}
         >
           <Ionicons
             name="gift-outline"
             size={24}
-            color="#333"
+            color={theme.colors.text}
             style={styles.gachaIcon}
           />
-          <Text style={styles.gachaButtonText}>Quay Gacha</Text>
+          <Text style={[styles.gachaButtonText, { color: theme.colors.text }]}>
+            Quay Gacha
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -48,7 +57,6 @@ const DiscoveryScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#fff",
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     alignItems: "center", // Căn giữa toàn bộ nội dung theo chiều ngang
   },
@@ -56,7 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
-    marginTop: -40,
+    marginTop: 15, // Thay đổi từ -40 thành 15 để giảm khoảng cách lề trên
   },
   scrollContent: {
     flexGrow: 1,
@@ -69,7 +77,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#E1DBCA",
     paddingVertical: 14,
     paddingHorizontal: 24,
     borderRadius: 30,
@@ -88,7 +95,6 @@ const styles = StyleSheet.create({
   gachaButtonText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#333",
   },
 });
 

@@ -23,16 +23,17 @@ export default function InfoScreen() {
     <View
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
-      </TouchableOpacity>
-
-      <Text style={[styles.title, { color: theme.colors.text }]}>
-        Thông tin cá nhân
-      </Text>
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
+        </TouchableOpacity>
+        <Text style={[styles.title, { color: theme.colors.text }]}>
+          Thông tin cá nhân
+        </Text>
+      </View>
 
       <Text style={[styles.label, { color: theme.colors.text }]}>
         Họ và tên
@@ -40,7 +41,7 @@ export default function InfoScreen() {
       <TextInput
         style={[
           styles.input,
-          { backgroundColor: theme.colors.surface, color: theme.colors.text },
+          { backgroundColor: "#e0e0e0", color: theme.colors.text },
         ]}
         placeholder="Nhập họ và tên"
         placeholderTextColor={theme.colors.textSecondary}
@@ -54,7 +55,7 @@ export default function InfoScreen() {
       <TextInput
         style={[
           styles.input,
-          { backgroundColor: theme.colors.surface, color: theme.colors.text },
+          { backgroundColor: "#e0e0e0", color: theme.colors.text },
         ]}
         placeholder="Nhập tên đăng nhập"
         placeholderTextColor={theme.colors.textSecondary}
@@ -68,7 +69,7 @@ export default function InfoScreen() {
       <TextInput
         style={[
           styles.input,
-          { backgroundColor: theme.colors.surface, color: theme.colors.text },
+          { backgroundColor: "#e0e0e0", color: theme.colors.text },
         ]}
         placeholder="Nhập số điện thoại"
         placeholderTextColor={theme.colors.textSecondary}
@@ -81,7 +82,7 @@ export default function InfoScreen() {
         Đổi ảnh đại diện
       </Text>
       <TouchableOpacity
-        style={[styles.avatarBox, { backgroundColor: theme.colors.surface }]}
+        style={[styles.avatarBox, { backgroundColor: "#e0e0e0" }]}
       >
         {avatar ? (
           <Image source={{ uri: avatar }} style={styles.avatar} />
@@ -111,15 +112,26 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#fff",
+    marginTop: 40,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center", // Thay đổi từ space-between thành center để căn giữa
+    marginBottom: 20,
+    position: "relative", // Thêm position relative để có thể định vị tuyệt đối nút quay lại
   },
   backButton: {
-    marginBottom: 10,
+    position: "absolute",
+    left: 0,
+    top: 0,
+    zIndex: 10,
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    marginBottom: 20,
     alignSelf: "center",
+    textAlign: "center",
   },
   label: {
     fontSize: 14,

@@ -16,7 +16,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 const settings = [
   { icon: "person-outline", label: "Thông tin cá nhân" },
   { icon: "lock-closed-outline", label: "Đổi mật khẩu" },
-  { icon: "notifications-outline", label: "Thông báo" },
+  { icon: "wallet-outline", label: "Ví của tôi" },
   { icon: "language-outline", label: "Ngôn ngữ" },
   { icon: "moon-outline", label: "Chế độ tối" },
   { icon: "gift-outline", label: "Vòng quay may mắn" },
@@ -31,7 +31,7 @@ const SettingScreen = () => {
   const [supportModalVisible, setSupportModalVisible] = useState(false);
 
   // Số điện thoại kỹ thuật viên
-  const techSupportPhone = "0123456789";
+  const techSupportPhone = "0985082004";
 
   // Hàm gọi điện thoại
   const callTechSupport = () => {
@@ -73,14 +73,6 @@ const SettingScreen = () => {
               Số dư : 100,000đ
             </Text>
           </View>
-          <TouchableOpacity
-            style={[
-              styles.editIcon,
-              { backgroundColor: theme.colors.buttonSecondary },
-            ]}
-          >
-            <Icon name="pencil-outline" size={18} color={theme.colors.text} />
-          </TouchableOpacity>
         </View>
 
         {/* Setting items */}
@@ -134,6 +126,14 @@ const SettingScreen = () => {
                   })
                 );
                 console.log("Navigating to SecurityPolicy screen");
+              } else if (item.label === "Ví của tôi") {
+                // Điều hướng đến màn hình ví của tôi
+                navigation.dispatch(
+                  CommonActions.navigate({
+                    name: "MyWallet",
+                  })
+                );
+                console.log("Navigating to MyWallet screen");
               } else if (item.label === "Hỗ trợ từ kỹ thuật viên") {
                 // Hiển thị modal số kỹ thuật viên
                 setSupportModalVisible(true);
