@@ -5,6 +5,7 @@ import InfoScreen from "../screens/settings/InfoScreen";
 import ChangePasswordScreen from "../screens/settings/ChangePasswordScreen";
 import LanguageScreen from "../screens/settings/LanguageScreen";
 import SecurityPolicyScreen from "../screens/settings/SecurityPolicyScreen";
+import PaymentStack from "./PaymentStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,11 @@ const SettingStackNavigator = () => {
       <Stack.Screen
         name="SecurityPolicy"
         component={SecurityPolicyScreen}
+        options={{ tabBarStyle: { display: "none" } }}
+      />
+      <Stack.Screen
+        name="MyWallet"
+        component={PaymentStack}
         options={{ tabBarStyle: { display: "none" } }}
       />
     </Stack.Navigator>

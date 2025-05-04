@@ -503,14 +503,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#1E3A5F",
   },
   header: {
+    marginTop: 40,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center", // Thay đổi từ space-between thành center để căn giữa tiêu đề
     paddingHorizontal: 16,
     paddingVertical: 12,
+    position: "relative", // Thêm position relative để có thể định vị tuyệt đối nút back
   },
   backButton: {
     padding: 8,
+    position: "absolute", // Thêm position absolute để định vị nút back
+    left: 8, // Đặt nút back sát lề trái
+    zIndex: 10, // Đảm bảo nút back hiển thị trên các phần tử khác
   },
   menuButton: {
     padding: 8,

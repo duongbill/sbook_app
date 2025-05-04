@@ -22,7 +22,7 @@ const navItems = [
     name: "discovery",
     label: "Khám phá",
     iconLib: Ionicons,
-    iconName: "search",
+    iconName: "compass",
     screen: "DiscoveryScreen",
   },
   {
@@ -30,7 +30,7 @@ const navItems = [
     label: "Tìm kiếm",
     iconLib: Ionicons,
     iconName: "search",
-    screen: "FindScreen",
+    screen: "SearchStack",
   },
 
   {

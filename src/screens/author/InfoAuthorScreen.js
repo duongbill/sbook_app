@@ -43,9 +43,12 @@ const authorBooks = [
   },
 ];
 
-export default function InfoAuthorScreen() {
+export default function InfoAuthorScreen({ route }) {
   const navigation = useNavigation();
   const { theme } = useContext(ThemeContext);
+
+  // Lấy thông tin tác giả từ tham số được truyền
+  const { authorId, authorName, authorImage } = route.params || {};
 
   // Render mỗi cuốn sách
   const renderBookItem = ({ item }) => (
@@ -105,12 +108,16 @@ export default function InfoAuthorScreen() {
         {/* Thông tin tác giả */}
         <View style={styles.authorInfoContainer}>
           <Image
-            source={require("../../../assets/db.png")}
+            source={
+              authorImage
+                ? { uri: authorImage }
+                : require("../../../assets/db.png")
+            }
             style={styles.authorImage}
           />
           <View style={styles.authorDetails}>
             <Text style={[styles.authorName, { color: theme.colors.text }]}>
-              Duong Bill
+              {authorName || "Duong Bill"}
             </Text>
             <Text
               style={[styles.bookCount, { color: theme.colors.textSecondary }]}
@@ -158,6 +165,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 20,
     paddingBottom: 10,
+    marginTop: 20,
   },
   backButton: {
     padding: 8,
