@@ -1,46 +1,74 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
-} from 'react-native';
-import IntroTab from '../../components/IntroTab';
-import ChapterTab from '../../components/ChapterTab';
-import ReviewTab from '../../components/ReviewTab';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { ThemeContext } from '../../context/ThemeContext';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Image } from 'react-native';
-
-const { width } = Dimensions.get('window');
+  ScrollView,
+  StatusBar,
+  Image,
+} from "react-native";
+import IntroTab from "../../components/IntroTab";
+import ChapterTab from "../../components/ChapterTab";
+import ReviewTab from "../../components/ReviewTab";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const reviews = [
-  { id: '1', name: 'Nguyen Hai Duong', rating: 5, review: 'Tôi rất thích cuốn sách này. Là một cuốn sách truyền cảm hứng về hành trình tự khám phá, chữa lành và phát triển bản thân.', image: require('../../../assets/db.png') },
-  { id: '2', name: 'Nguyen Hai Duong', rating: 3, review: 'Sách ổn nhưng có thể cải thiện', image: require('../../../assets/db.png') },
-  { id: '3', name: 'Nguyen Hai Duong', rating: 4, review: 'Cũng khá tốt', image: require('../../../assets/db.png') },
-  { id: '4', name: 'Nguyen Hai Duong', rating: 2, review: 'Không thật sự thích', image: require('../../../assets/db.png') },
-  { id: '5', name: 'Nguyen Hai Duong', rating: 5, review: 'Tuyệt vời, đọc rất thích', image: require('../../../assets/db.png') },
+  {
+    id: "1",
+    name: "Nguyen Hai Duong",
+    rating: 5,
+    review:
+      "Tôi rất thích cuốn sách này. Là một cuốn sách truyền cảm hứng về hành trình tự khám phá, chữa lành và phát triển bản thân.",
+    image: require("../../../assets/db.png"),
+  },
+  {
+    id: "2",
+    name: "Nguyen Hai Duong",
+    rating: 3,
+    review: "Sách ổn nhưng có thể cải thiện",
+    image: require("../../../assets/db.png"),
+  },
+  {
+    id: "3",
+    name: "Nguyen Hai Duong",
+    rating: 4,
+    review: "Cũng khá tốt",
+    image: require("../../../assets/db.png"),
+  },
+  {
+    id: "4",
+    name: "Nguyen Hai Duong",
+    rating: 2,
+    review: "Không thật sự thích",
+    image: require("../../../assets/db.png"),
+  },
+  {
+    id: "5",
+    name: "Nguyen Hai Duong",
+    rating: 5,
+    review: "Tuyệt vời, đọc rất thích",
+    image: require("../../../assets/db.png"),
+  },
 ];
 
 const BookDetailScreen = () => {
   const navigation = useNavigation();
-  const { theme } = useContext(ThemeContext);
-  const [activeTab, setActiveTab] = useState('intro');
-  const categories = ['Tình cảm', 'Chữa lành', 'Tâm lý'];
+  const [activeTab, setActiveTab] = useState("intro");
+  const categories = ["Tình cảm", "Chữa lành", "Tâm lý"];
   const route = useRoute();
   const { bookId } = route.params;
 
-  console.log('Book ID:', bookId);
-  
+  console.log("Book ID:", bookId);
+
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'intro':
+      case "intro":
         return <IntroTab />;
-      case 'chapter':
+      case "chapter":
         return <ChapterTab />;
-      case 'review':
+      case "review":
         return <ReviewTab reviews={reviews} />;
       default:
         return null;
@@ -48,86 +76,121 @@ const BookDetailScreen = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <ScrollView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="chevron-back-outline" size={30} style={[styles.backIcon, { color: theme.colors.text }]} />
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Icon name="chevron-back-outline" size={24} color="#000" />
         </TouchableOpacity>
         <View style={styles.headerIcons}>
-          <Icon name="bookmark-outline" size={24} style={[styles.saveIcon, { color: theme.colors.text }]} />
-          <Icon name="ellipsis-vertical-outline" size={24} style={[styles.ellipsisIcon, { color: theme.colors.text }]} />
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="bookmark-outline" size={22} color="#000" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconButton}>
+            <Icon name="ellipsis-vertical" size={22} color="#000" />
+          </TouchableOpacity>
         </View>
       </View>
 
       {/* Book Info */}
-      <View style={styles.bookInfo}>
-        <Image
-          source={require('../../../assets/adaptive-icon.png')}
-          style={styles.bookImage}
-        />
-        <View style={styles.bookTitleInfo}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>{'Come home to yourself'}</Text>
-          <Text style={[styles.author, { color: theme.colors.textSecondary }]}>{'by Déjà Rae'}</Text>
-          <Text style={[styles.price, { color: theme.colors.red}]}>{'Giá: 120.000 VNĐ'}</Text>
-          <Text style={[styles.rating, { color: theme.colors.textSecondary }]}>{'4.6 (508 lượt đánh giá)'}</Text>
-          
-          <View style={styles.categoryContainer}>
-            {categories.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                style={[styles.categoryItem, { backgroundColor: theme.colors.white, borderColor: theme.colors.text }]}
-                onPress={() => console.log(`Bạn chọn: ${item}`)}
-              >
-                <Text style={[styles.categoryText, { color: theme.colors.textSecondary }]}>{item}</Text>
-              </TouchableOpacity>
-            ))}
+      <View style={styles.bookInfoContainer}>
+        <View style={styles.bookInfo}>
+          <Image
+            source={require("../../../assets/adaptive-icon.png")}
+            style={styles.bookImage}
+            resizeMode="cover"
+          />
+          <View style={styles.bookTitleInfo}>
+            <Text style={styles.title}>Come home to yourself</Text>
+            <Text style={styles.author}>by Déjà Rae</Text>
+            <Text style={styles.rating}>
+              4.6 <Text style={styles.ratingCount}>(508 lượt đánh giá)</Text>
+            </Text>
+
+            <View style={styles.categoryContainer}>
+              {categories.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.categoryItem}
+                  onPress={() => console.log(`Bạn chọn: ${item}`)}
+                >
+                  <Text style={styles.categoryText}>{item}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
         </View>
       </View>
 
       {/* Tabs */}
-      <View style={[styles.tabContainer, { backgroundColor: theme.colors.orange }]}>
+      <View style={styles.tabContainer}>
         <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'intro' && [styles.activeTab, { backgroundColor: theme.colors.white }]]}
-          onPress={() => setActiveTab('intro')}
+          style={[styles.tabButton, activeTab === "intro" && styles.activeTab]}
+          onPress={() => setActiveTab("intro")}
         >
-          <Text style={[styles.tabText, activeTab === 'intro' && { color: theme.colors.text }]}>{'Giới thiệu'}</Text>
+          <Text
+            style={[
+              styles.tabText,
+              activeTab === "intro" && styles.activeTabText,
+            ]}
+          >
+            Giới thiệu
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'chapter' && [styles.activeTab, { backgroundColor: theme.colors.white }]]}
-          onPress={() => setActiveTab('chapter')}
+          style={[
+            styles.tabButton,
+            activeTab === "chapter" && styles.activeTab,
+          ]}
+          onPress={() => setActiveTab("chapter")}
         >
-          <Text style={[styles.tabText, activeTab === 'chapter' && { color: theme.colors.text }]}>{'Chương'}</Text>
+          <Text
+            style={[
+              styles.tabText,
+              activeTab === "chapter" && styles.activeTabText,
+            ]}
+          >
+            Chương
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'review' && [styles.activeTab, { backgroundColor: theme.colors.white }]]}
-          onPress={() => setActiveTab('review')}
+          style={[styles.tabButton, activeTab === "review" && styles.activeTab]}
+          onPress={() => setActiveTab("review")}
         >
-          <Text style={[styles.tabText, activeTab === 'review' && { color: theme.colors.text }]}>{'Đánh giá'}</Text>
+          <Text
+            style={[
+              styles.tabText,
+              activeTab === "review" && styles.activeTabText,
+            ]}
+          >
+            Đánh giá
+          </Text>
         </TouchableOpacity>
       </View>
 
       {/* Tab Content */}
-      <View style={[styles.contentContainer, { backgroundColor: theme.colors.surface }]}>
-        {renderTabContent()}
-      </View>
+      <View style={styles.contentContainer}>{renderTabContent()}</View>
 
       {/* Fixed Bottom Buttons */}
-      <View style={[styles.fixedBottom, { backgroundColor: theme.colors.background }]}>
-        <TouchableOpacity style={[styles.shareButton, { backgroundColor: theme.colors.buttonSecondary }]}>
-          <Icon name="share-social-outline" size={20} color={theme.colors.text} />
+      <View style={styles.fixedBottom}>
+        <TouchableOpacity style={styles.shareButton}>
+          <Icon name="share-social-outline" size={22} color="#333" />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.previewButton, { backgroundColor: theme.colors.white }]}>
-          <Icon name="book-outline" size={20} color={theme.colors.text} />
-          <Text style={[styles.buttonText, { color: theme.colors.text }]}>{'Đọc thử'}</Text>
+        <TouchableOpacity style={styles.readButton}>
+          <Icon name="book-outline" size={20} color="#333" />
+          <Text style={styles.readButtonText}>Đọc thử</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.previewButton, { backgroundColor: theme.colors.primary }]}>
-          <Icon name="cash-outline" size={20} color={theme.colors.white} />
-          <Text style={[styles.buttonText, { color: theme.colors.white }]}>{'Mua ngay'}</Text>
+        <TouchableOpacity style={styles.buyButton}>
+          <Icon name="cart-outline" size={20} color="#FFF" />
+          <Text style={styles.buyButtonText}>Mua ngay</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -136,143 +199,180 @@ export default BookDetailScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FFFFFF",
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 50,
-    paddingLeft: 20,
-    paddingRight: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingTop: 40,
+    paddingBottom: 10,
+  },
+  backButton: {
+    padding: 8,
   },
   backIcon: {
-    color: '#000',
+    color: "#000",
   },
   headerIcons: {
-    flexDirection: 'row',
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  iconButton: {
+    padding: 8,
+    marginLeft: 8,
   },
   saveIcon: {
-    marginRight: 16,
+    marginRight: 8,
+  },
+  bookInfoContainer: {
+    paddingHorizontal: 16,
+    marginTop: 10,
   },
   bookInfo: {
-    display: 'flex',
-    marginLeft: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 5,
-    marginTop: 40,
-    gap: 12,
+    flexDirection: "row",
+    alignItems: "flex-start",
   },
   bookImage: {
-    width: 170,
-    height: 240,
+    width: 150,
+    height: 220,
     borderRadius: 8,
-    marginBottom: 10,
+    marginRight: 16,
   },
   bookTitleInfo: {
     flex: 1,
-    justifyContent: 'flex-start',
-    flexDirection: 'column',
-    marginTop: 20,
+    paddingTop: 5,
   },
   title: {
-    fontSize: 25,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 4,
+    lineHeight: 28,
   },
   author: {
     fontSize: 16,
-    marginTop: 8,
+    marginBottom: 8,
+    color: "#666",
   },
   rating: {
     fontSize: 14,
-    marginTop: 8,
+    fontWeight: "bold",
+    marginBottom: 12,
+    color: "#666",
   },
-  price: {
-    width: 'auto',
-    marginTop: 8,
-    fontWeight: '700',
-    fontSize: 18,
+  ratingCount: {
+    fontWeight: "normal",
+    fontSize: 13,
   },
   categoryContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
+    flexDirection: "row",
+    flexWrap: "wrap",
     marginTop: 8,
   },
   categoryItem: {
-    borderRadius: 5,
-    paddingVertical: 4,
+    backgroundColor: "#F5F5F5",
+    borderRadius: 20,
+    paddingVertical: 6,
     paddingHorizontal: 12,
+    marginRight: 8,
+    marginBottom: 8,
     borderWidth: 1,
+    borderColor: "#E0E0E0",
   },
   categoryText: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 12,
+    color: "#666",
   },
   tabContainer: {
-    flexDirection: 'row',
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    padding: 10,
-    height: 65,
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    backgroundColor: "#FFCC00",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    marginTop: 24,
     marginHorizontal: 16,
-    marginTop: 16,
+    overflow: "hidden",
   },
   tabButton: {
     flex: 1,
-    paddingVertical: 10,
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
+    paddingVertical: 12,
+    alignItems: "center",
+    justifyContent: "center",
   },
   activeTab: {
-    backgroundColor: 'white',
+    backgroundColor: "#FFF",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   tabText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: 'black',
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#000",
+  },
+  activeTabText: {
+    color: "#000",
+    fontWeight: "bold",
   },
   contentContainer: {
-    padding: 10,
-    marginLeft: 16,
-    marginRight: 16,
-    minHeight: 330,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
+    backgroundColor: "#FFF9E6",
+    padding: 16,
+    marginHorizontal: 16,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    minHeight: 200,
   },
   fixedBottom: {
-    position: 'absolute',
-    bottom: 0,
-    flexDirection: 'row',
-    width: width,
-    padding: 10,
-    marginBottom: 30,
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    backgroundColor: "#FFF",
+    borderTopWidth: 1,
+    borderTopColor: "#EEE",
+    marginTop: 20,
   },
   shareButton: {
-    padding: 10,
-    borderRadius: 50,
-    width: 50,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#F5F5F5",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
   },
-  previewButton: {
+  readButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#F5F5F5",
+    borderRadius: 22,
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 25,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 10,
-    width: 125,
-    height: 50,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    flex: 1,
+    marginHorizontal: 10,
   },
-  buttonText: {
-    fontWeight: 'bold',
+  readButtonText: {
+    marginLeft: 8,
+    fontWeight: "600",
+    color: "#333",
+  },
+  buyButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#CC0000",
+    borderRadius: 22,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    flex: 1,
+  },
+  buyButtonText: {
+    marginLeft: 8,
+    fontWeight: "600",
+    color: "#FFF",
   },
 });

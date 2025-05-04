@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import React, { useContext } from 'react';
-import { View, Text, Pressable, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { ThemeContext } from '../../context/ThemeContext';
-import { CommonActions, useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-=======
 import React, { useContext, useState } from "react";
 import {
   View,
@@ -18,9 +10,9 @@ import {
   Linking,
 } from "react-native";
 import { ThemeContext } from "../../context/ThemeContext";
-import { useNavigation, CommonActions } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
->>>>>>> 54541d345619060511b1570379620cd26233e764
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const settings = [
   { icon: "person-outline", label: "Thông tin cá nhân" },
@@ -50,12 +42,12 @@ const SettingScreen = () => {
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.removeItem('userToken');
-      console.log('Token removed, logged out successfully.');
-  
-      navigation.replace('Login');
+      await AsyncStorage.removeItem("userToken");
+      console.log("Token removed, logged out successfully.");
+
+      navigation.replace("Login");
     } catch (error) {
-      console.error('Error logging out:', error);
+      console.error("Error logging out:", error);
     }
   };
 
@@ -101,7 +93,6 @@ const SettingScreen = () => {
             key={index}
             style={[styles.item, { borderBottomColor: theme.colors.text }]}
             onPress={() => {
-
               if (item.label === "Đăng xuất") {
                 // Handle logout logic here
                 console.log("Logged out");
@@ -159,7 +150,6 @@ const SettingScreen = () => {
                 // Hiển thị modal số kỹ thuật viên
                 setSupportModalVisible(true);
                 console.log("Showing tech support modal");
-
               } else {
                 navigation.navigate("Setting");
               }
