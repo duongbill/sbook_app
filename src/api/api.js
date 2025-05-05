@@ -196,6 +196,10 @@ export const getGenres = () =>
     { id: "g1", name: "Sách kinh doanh" },
     { id: "g2", name: "Sách kỹ năng" },
     { id: "g3", name: "Sách khoa học" },
+    { id: "g4", name: "Sách tâm lý" },
+    { id: "g5", name: "Sách tình cảm" },
+    { id: "g6", name: "Sách thiếu nhi" },
+    { id: "g7", name: "Sách văn học" },
   ]);
 
 export const getNewBooks = () =>
@@ -290,7 +294,7 @@ const books = [
     author: "James Clear",
     rating: 4.8,
     image:
-      "https://salt.tikicdn.com/cache/w1200/ts/product/7c/e8/34/4d3636aadb471cad0bf2f45089f4b536.jpg",
+      "https://sachnoi.top/upload/images/atomi-habits-thoi-quen-nguyen-tu.webp",
     description:
       "Thay đổi nhỏ, kết quả lớn - Cách xây dựng thói quen tốt và phá vỡ thói quen xấu.",
     genre: "Kỹ năng",
@@ -305,11 +309,18 @@ export const getBooksByGenre = (genre) => {
 export const fetchPopularBooks = async (keyword = "") => {
   const trimmedKeyword = keyword.trim().toLowerCase();
 
+  // Lấy tất cả sách từ các nguồn
+  const popularBooks = await getPopularBooks();
+  const newBooks = await getNewBooks();
+  const allBooks = [...popularBooks, ...newBooks, ...books];
+
   if (!trimmedKeyword) {
-    return books.sort((a, b) => b.rating - a.rating).slice(0, 3);
+    // Trả về 3 cuốn sách phổ biến nhất khi không có từ khóa tìm kiếm
+    return popularBooks.slice(0, 3);
   }
 
-  return books.filter(
+  // Tìm kiếm trong tất cả sách
+  return allBooks.filter(
     (book) =>
       book.title.toLowerCase().includes(trimmedKeyword) ||
       book.author.toLowerCase().includes(trimmedKeyword)

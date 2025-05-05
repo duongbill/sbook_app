@@ -109,37 +109,41 @@ const SearchScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            {/* Nội dung trượt xuống */}
-            <Animated.ScrollView
-                style={[
-                    styles.scrollContent,
-                    { transform: [{ translateY: slideAnim }] },
-                ]}
-                showsVerticalScrollIndicator={false}
-            >
-                <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-                    Kết quả tìm kiếm
-                </Text>
-                {books.length === 0 ? (
-                    <Text style={[styles.noResultText, { color: theme.colors.text }]}>
-                        Không tìm thấy sách đang tìm kiếm.
-                    </Text>
-                ) : (
-                    <FlatList
-                        data={books}
-                        keyExtractor={(item) => item.id}
-                        renderItem={({ item }) => (
-                            <BookListItem
-                                image={item.image}
-                                title={item.title}
-                                author={item.author}
-                                rating={item.rating}
-                                description={item.description}
-                            />
-                        )}
-                        scrollEnabled={false}
-                    />
-                )}
+
+      {/* Nội dung trượt xuống */}
+      <Animated.ScrollView
+        style={[
+          styles.scrollContent,
+          { transform: [{ translateY: slideAnim }] },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+          Kết quả tìm kiếm
+        </Text>
+        {books.length === 0 ? (
+          <Text style={[styles.noResultText, { color: theme.colors.text }]}>
+            Không tìm thấy sách đang tìm kiếm.
+          </Text>
+        ) : (
+          <FlatList
+            data={books}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <BookListItem
+                id={item.id}
+                image={item.image}
+                title={item.title}
+                author={item.author}
+                rating={item.rating}
+                description={item.description}
+                navigation={navigation}
+              />
+            )}
+            scrollEnabled={false}
+          />
+        )}
+
 
                 {searchQuery.trim() === "" && (
                     <>

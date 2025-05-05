@@ -10,6 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import { ThemeContext } from "../context/ThemeContext";
 
 const ReviewTab = ({ reviews }) => {
@@ -55,16 +56,10 @@ const ReviewTab = ({ reviews }) => {
           <Text style={[styles.reviewerName, { color: theme.colors.text }]}>
             {item.name}
           </Text>
-          <View style={styles.ratingContainer}>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <Icon
-                key={index}
-                name={index < item.rating ? "star" : "star-outline"}
-                size={16}
-                color={theme.colors.orange}
-              />
-            ))}
-          </View>
+          <Text style={[styles.bookRating, { color: theme.colors.text }]}>
+            <AntDesign name="star" size={16} color="rgb(255,204,0)" />{" "}
+            {item.rating}
+          </Text>
         </View>
       </View>
       <Text style={[styles.reviewText, { color: theme.colors.textSecondary }]}>
@@ -81,7 +76,7 @@ const ReviewTab = ({ reviews }) => {
           styles.reviewCard,
           {
             borderColor: theme.colors.border,
-            backgroundColor: theme.colors.surface,
+            backgroundColor: theme.colors.background_bl,
           },
         ]}
       >
@@ -94,16 +89,10 @@ const ReviewTab = ({ reviews }) => {
             <Text style={[styles.reviewerName, { color: theme.colors.text }]}>
               {reviews[0].name}
             </Text>
-            <View style={styles.ratingContainer}>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <Icon
-                  key={index}
-                  name={index < reviews[0].rating ? "star" : "star-outline"}
-                  size={16}
-                  color={theme.colors.orange}
-                />
-              ))}
-            </View>
+            <Text style={[styles.bookRating, { color: theme.colors.text }]}>
+              <AntDesign name="star" size={16} color="rgb(255,204,0)" />{" "}
+              {reviews[0].rating}
+            </Text>
           </View>
         </View>
         <Text
@@ -116,7 +105,7 @@ const ReviewTab = ({ reviews }) => {
       {/* Nút xem thêm và viết đánh giá */}
       <View style={styles.actions}>
         <TouchableOpacity
-          style={[styles.writeButton, { backgroundColor: theme.colors.orange }]}
+          style={[styles.writeButton, { backgroundColor: theme.colors.green_light }]}
           onPress={() => setWriteReviewVisible(true)}
         >
           <Text style={[styles.buttonText, { color: theme.colors.text }]}>
@@ -126,7 +115,7 @@ const ReviewTab = ({ reviews }) => {
         <TouchableOpacity
           style={[
             styles.viewMoreButton,
-            { backgroundColor: theme.colors.buttonBlue },
+            { backgroundColor: theme.colors.green_light },
           ]}
           onPress={() => setModalVisible(true)}
         >
@@ -154,7 +143,7 @@ const ReviewTab = ({ reviews }) => {
               style={[
                 styles.sortButton,
                 sortCriteria === null && {
-                  backgroundColor: theme.colors.orange,
+                  backgroundColor: theme.colors.backgroundSecondary,
                 },
               ]}
               onPress={() => setSortCriteria(null)} // Hiển thị tất cả
@@ -176,7 +165,7 @@ const ReviewTab = ({ reviews }) => {
                   style={[
                     styles.sortButton,
                     sortCriteria === rating && {
-                      backgroundColor: theme.colors.orange,
+                      backgroundColor: theme.colors.backgroundSecondary,
                     },
                   ]}
                   onPress={() => setSortCriteria(rating)} // Lọc theo số sao
@@ -206,7 +195,8 @@ const ReviewTab = ({ reviews }) => {
             style={[
               styles.closeButton,
               {
-                backgroundColor: theme.colors.white,
+                color: theme.colors.text,
+                backgroundColor: theme.colors.bottomTabColor,
                 borderColor: theme.colors.border,
               },
             ]}
@@ -357,6 +347,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 4,
   },
+  bookRating: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 4,
+  },
   ratingContainer: {
     flexDirection: "row",
     marginBottom: 20,
@@ -462,8 +457,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    flex: 1,
-    minWidth: 100,
+    marginTop: "auto", // Đẩy nút xuống dưới cùng
   },
   closeButtonText: {
     fontSize: 18,
@@ -490,6 +484,5 @@ const styles = StyleSheet.create({
   },
   sortButtonText: {
     fontSize: 14,
-    color: "#555", // Màu mặc định, sẽ bị ghi đè khi được chọn
   },
 });

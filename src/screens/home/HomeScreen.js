@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import {
-    View,
-    Text,
-    ScrollView,
-    Image,
-    StyleSheet,
-    ActivityIndicator,
-    TouchableOpacity,
-    Animated,
-    StatusBar,
+
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity,
+  Animated,
+  StatusBar,
+  FlatList,
+
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -20,11 +23,12 @@ import GenreCard from "../../components/GenreCard";
 import { ThemeContext } from "../../context/ThemeContext";
 
 import {
-    getPopularBooks,
-    getAuthors,
-    getGenres,
-    getNewBooks,
-    getBooksByGenre,
+
+  getPopularBooks,
+  getAuthors,
+  getNewBooks,
+  getBooksByGenre,
+
 } from "../../api/api";
 
 const HomeScreen = ({ navigation }) => {
@@ -37,9 +41,26 @@ const HomeScreen = ({ navigation }) => {
     const [businessBooks, setBusinessBooks] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const scrollY = useRef(new Animated.Value(0)).current;
-    const headerAnim = useRef(new Animated.Value(0)).current; // Separate Animated.Value for header animation
-    const lastScrollY = useRef(0);
+
+  // Hàm lấy thể loại từ API mới
+  const fetchGenres = async () => {
+    try {
+      const response = await fetch("https://api.vawndev.site/category");
+      const data = await response.json();
+      if (data.code === 1000 && data.result && data.result.categories) {
+        return data.result.categories;
+      }
+      return [];
+    } catch (error) {
+      console.error("Lỗi khi lấy thể loại:", error);
+      return [];
+    }
+  };
+
+  const scrollY = useRef(new Animated.Value(0)).current;
+  const headerAnim = useRef(new Animated.Value(0)).current; // Separate Animated.Value for header animation
+  const lastScrollY = useRef(0);
+
 
     const HEADER_HEIGHT = 120; // Chiều cao header
 
@@ -74,17 +95,19 @@ const HomeScreen = ({ navigation }) => {
         lastScrollY.current = currentScrollY;
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [popular, authorsData, genreData, newB, business] =
-                    await Promise.all([
-                        getPopularBooks(),
-                        getAuthors(),
-                        getGenres(),
-                        getNewBooks(),
-                        getBooksByGenre("Kinh doanh"),
-                    ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [popular, authorsData, genreData, newB, business] =
+          await Promise.all([
+            getPopularBooks(),
+            getAuthors(),
+            fetchGenres(), // Sử dụng hàm fetchGenres mới thay vì getGenres
+            getNewBooks(),
+            getBooksByGenre("Kinh doanh"),
+          ]);
+
 
                 setPopularBooks(popular);
                 setAuthors(authorsData);
@@ -196,13 +219,18 @@ const HomeScreen = ({ navigation }) => {
                     </ScrollView>
                 </Section>
 
-                <Section title="Thể loại">
-                    <View style={styles.genreRow}>
-                        {genres.map((genre) => (
-                            <GenreCard key={genre.id} title={genre.name} />
-                        ))}
-                    </View>
-                </Section>
+        <Section title="Thể loại">
+          <FlatList
+            data={genres}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <GenreCard title={item.name} />}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.genreList}
+            ItemSeparatorComponent={() => <View style={{ width: 4 }} />}
+          />
+        </Section>
+
 
                 <Section title="Sách mới">
                     {newBooks.map((book) => (
@@ -239,52 +267,59 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        position: "relative",
-    },
-    header: {
-        position: "absolute",
-        top: 20,
-        left: 10,
-        right: 10,
-        zIndex: 10,
-        flexDirection: "row",
-        alignItems: "center",
-        padding: 10,
-        height: 60,
-        borderRadius: 10,
-        elevation: 4,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        marginTop: 20,
-    },
-    avatar: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        marginRight: 10,
-    },
-    greeting: {
-        flex: 1,
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-    searchIcon: {
-        padding: 4,
-    },
-    genreRow: {
-        flexDirection: "row",
-        gap: 12,
-        flexWrap: "wrap",
-    },
-    loadingContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
+
+  container: {
+    flex: 1,
+    position: "relative",
+  },
+  header: {
+    position: "absolute",
+    top: 48, // Tăng top từ 38 lên 48 để lùi xuống 10px
+    left: 10,
+    right: 10,
+    zIndex: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    height: 60,
+    borderRadius: 10,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    marginTop: 20,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  greeting: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  searchIcon: {
+    padding: 4,
+  },
+  genreRow: {
+    flexDirection: "row",
+    gap: 12,
+    flexWrap: "wrap",
+  },
+  genreList: {
+    paddingVertical: 12,
+    paddingHorizontal: 5,
+    paddingBottom: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
 });
 
 export default HomeScreen;
