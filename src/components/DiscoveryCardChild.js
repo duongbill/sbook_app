@@ -45,7 +45,7 @@ const DiscoveryCardChild = ({ route }) => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <Image
-          source={image || require("../../assets/bg1.png")}
+          source={image || require("../../assets/snews.png")}
           style={styles.coverImage}
         />
         <View
@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     position: "absolute",
-    top: 40, // Thay đổi từ 0 thành 40 để nút hiển thị thấp hơn
+    top: 0, // Đặt nút back button cao hơn để không đè lên chữ
     left: 0,
     right: 0,
     zIndex: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 5, // Giảm padding để nút gần cạnh trái hơn
     paddingTop: 10,
   },
   backButton: {
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   coverImage: {
     width: "100%",
-    height: 80,
+    height: 50,
     resizeMode: "cover",
   },
   bookImageContainer: {

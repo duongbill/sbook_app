@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const navItems = [
   {
     name: "home",
     label: "Trang chủ",
-    iconLib: AntDesign,
+    iconLib: FontAwesome,
     iconName: "home",
     screen: "HomeScreen",
   },
@@ -21,15 +21,15 @@ const navItems = [
   {
     name: "discovery",
     label: "Khám phá",
-    iconLib: Ionicons,
-    iconName: "compass",
+    iconLib: MaterialIcons,
+    iconName: "explore",
     screen: "DiscoveryScreen",
   },
   {
     name: "find",
     label: "Tìm kiếm",
     iconLib: Ionicons,
-    iconName: "search",
+    iconName: "search-outline",
     screen: "SearchStack",
   },
   {
