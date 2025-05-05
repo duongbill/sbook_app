@@ -290,7 +290,7 @@ const books = [
     author: "James Clear",
     rating: 4.8,
     image:
-      "https://salt.tikicdn.com/cache/w1200/ts/product/7c/e8/34/4d3636aadb471cad0bf2f45089f4b536.jpg",
+      "https://sachnoi.top/upload/images/atomi-habits-thoi-quen-nguyen-tu.webp",
     description:
       "Thay đổi nhỏ, kết quả lớn - Cách xây dựng thói quen tốt và phá vỡ thói quen xấu.",
     genre: "Kỹ năng",
