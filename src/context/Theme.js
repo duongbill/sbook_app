@@ -6,12 +6,19 @@ export const LightTheme = {
     text: "#000",
     textSecondary: "gray",
 
-    border: "#E0DED9",
-    primary: "#3A59D1",
+    border: "#11111",
+    primary: "#8296E5",
     buttonSecondary: "#E4E0E1",
     bottomTabColor: "#E1DBCA",
 
     backgroundSecondary: "#ffeef5",
+
+    green_light: "#BDDDE4",
+    text_price: "#4E229C",
+    background_cate: "#FCC900",
+    color_cate: "#FFFFFF",
+    background_bl: "#FFFFFF",
+    white: "#111111",
   },
   font: {
     family: "Roboto",
@@ -26,12 +33,19 @@ export const DarkTheme = {
     background: "#3C3D37",
     surface: "#1E1E1E",
     text: "#F0E1E1",
-    textSecondary: "rgba(190, 184, 168, 0.7)",
+    textSecondary: "#EBE8E8",
     border: "#2A2A2A",
     primary: "#08A7A2",
     buttonSecondary: "#543A14",
     bottomTabColor: "#3F4F44",
     backgroundSecondary: "#00110A",
+
+    text_price: "#52C5A5",
+    green_light: "#697565",
+    background_cate: "#988F7D",
+    color_cate: "#FFFFFF",
+    background_bl: "#6C6C6C",
+    white: "#FFFFFF",
   },
   font: {
     family: "Roboto",

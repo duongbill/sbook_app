@@ -159,7 +159,7 @@ const BookDetailScreen = () => {
               >
                 by {book?.author}
               </Text>
-              <Text style={[styles.price, { color: theme.colors.red }]}>
+              <Text style={[styles.price, { color: theme.colors.text_price }]}>
                 {"Giá: " + (book?.price || "120.000 VNĐ")}
               </Text>
               <Text
@@ -177,7 +177,8 @@ const BookDetailScreen = () => {
                     style={[
                       styles.categoryItem,
                       {
-                        backgroundColor: theme.colors.surface,
+                        color: theme.colors.text,
+                        backgroundColor: theme.colors.background_cate,
                         borderColor: theme.colors.border,
                       },
                     ]}
@@ -186,7 +187,7 @@ const BookDetailScreen = () => {
                     <Text
                       style={[
                         styles.categoryText,
-                        { color: theme.colors.textSecondary },
+                        {color: theme.colors.text},
                       ]}
                     >
                       {item}
@@ -407,6 +408,10 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 12,
     borderWidth: 1,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
   },
   categoryText: {
     fontSize: 14,
