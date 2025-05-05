@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  StatusBar,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -37,9 +39,14 @@ export default function ChangePasswordScreen() {
   };
 
   return (
-    <View
+    <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
+      <StatusBar
+        barStyle={theme.mode === "dark" ? "light-content" : "dark-content"}
+        backgroundColor="transparent"
+        translucent={true}
+      />
       {/* Header với nút quay lại */}
       <View style={styles.header}>
         <TouchableOpacity
@@ -62,7 +69,7 @@ export default function ChangePasswordScreen() {
         <TextInput
           style={[
             styles.input,
-            { backgroundColor: "#e0e0e0", color: theme.colors.text },
+            { backgroundColor: theme.colors.surface, color: theme.colors.text },
           ]}
           placeholder="Nhập mật khẩu cũ"
           placeholderTextColor={theme.colors.textSecondary}
@@ -77,7 +84,7 @@ export default function ChangePasswordScreen() {
         <TextInput
           style={[
             styles.input,
-            { backgroundColor: "#e0e0e0", color: theme.colors.text },
+            { backgroundColor: theme.colors.surface, color: theme.colors.text },
           ]}
           placeholder="Nhập mật khẩu mới"
           placeholderTextColor={theme.colors.textSecondary}
@@ -92,7 +99,7 @@ export default function ChangePasswordScreen() {
         <TextInput
           style={[
             styles.input,
-            { backgroundColor: "#e0e0e0", color: theme.colors.text },
+            { backgroundColor: theme.colors.surface, color: theme.colors.text },
           ]}
           placeholder="Nhập lại mật khẩu mới"
           placeholderTextColor={theme.colors.textSecondary}
@@ -102,29 +109,31 @@ export default function ChangePasswordScreen() {
         />
 
         <TouchableOpacity
-          style={styles.confirmButton}
+          style={[
+            styles.confirmButton,
+            { backgroundColor: theme.colors.primary },
+          ]}
           onPress={handleChangePassword}
         >
           <Text style={styles.confirmText}>Xác nhận</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingTop: 20,
+    paddingTop: 10,
     paddingBottom: 10,
-    marginTop: 30,
+    marginTop: 0,
   },
   backButton: {
     padding: 8,
@@ -146,13 +155,11 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    backgroundColor: "#f0f0f0",
     borderRadius: 8,
     paddingHorizontal: 15,
     marginBottom: 20,
   },
   confirmButton: {
-    backgroundColor: "#B71C1C",
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",
