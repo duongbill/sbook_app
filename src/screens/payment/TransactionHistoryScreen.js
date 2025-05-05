@@ -1,42 +1,128 @@
-import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useContext } from "react";
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  StatusBar,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const TransactionHistoryScreen = ({ navigation }) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
+      <StatusBar
+        barStyle={theme.mode === "dark" ? "light-content" : "dark-content"}
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <View
+        style={[
+          styles.header,
+          {
+            backgroundColor: theme.colors.surface,
+            borderColor: theme.colors.border,
+          },
+        ]}
+      >
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} />
+          <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
         </TouchableOpacity>
-        <Text style={styles.title}>Lịch sử giao dịch</Text>
+        <Text style={[styles.title, { color: theme.colors.text }]}>
+          Lịch sử giao dịch
+        </Text>
       </View>
 
       <ScrollView>
-        <View style={styles.summary}>
-          <Text style={styles.summaryText}>Số tiền đã tiêu: 200.000đ</Text>
-          <Text style={styles.linkText}>Số sách đã mua: 3</Text>
+        <View
+          style={[
+            styles.summary,
+            { backgroundColor: theme.colors.cardBackground },
+          ]}
+        >
+          <Text style={[styles.summaryText, { color: theme.colors.text }]}>
+            Số tiền đã tiêu: 200.000đ
+          </Text>
+          <Text style={[styles.linkText, { color: theme.colors.primary }]}>
+            Số sách đã mua: 3
+          </Text>
         </View>
 
         {/* Tháng 4 */}
         <View style={styles.monthSection}>
-          <View style={styles.monthHeader}>
-            <Text style={styles.monthText}>Tháng 4/2025</Text>
+          <View
+            style={[
+              styles.monthHeader,
+              { backgroundColor: theme.colors.cardHeaderBackground },
+            ]}
+          >
+            <Text style={[styles.monthText, { color: theme.colors.text }]}>
+              Tháng 4/2025
+            </Text>
           </View>
 
           {[
-            { title: 'Nạp tiền vào ví từ CODE', date: '13:24 - 17/04/2025', amount: '+100.000đ', type: 'income' },
-            { title: 'Mua sách Come home to yourself', date: '13:24 - 17/04/2025', amount: '-58.000đ', type: 'expense' },
-            { title: 'Nạp tiền vào ví từ CODE', date: '13:24 - 17/04/2025', amount: '+100.000đ', type: 'income' },
-            { title: 'Mua sách Come home to yourself', date: '13:24 - 17/04/2025', amount: '-58.000đ', type: 'expense' },
+            {
+              title: "Nạp tiền vào ví từ CODE",
+              date: "13:24 - 17/04/2025",
+              amount: "+100.000đ",
+              type: "income",
+            },
+            {
+              title: "Mua sách Come home to yourself",
+              date: "13:24 - 17/04/2025",
+              amount: "-58.000đ",
+              type: "expense",
+            },
+            {
+              title: "Nạp tiền vào ví từ CODE",
+              date: "13:24 - 17/04/2025",
+              amount: "+100.000đ",
+              type: "income",
+            },
+            {
+              title: "Mua sách Come home to yourself",
+              date: "13:24 - 17/04/2025",
+              amount: "-58.000đ",
+              type: "expense",
+            },
           ].map((item, index) => (
-            <View key={index} style={styles.transactionItem}>
-              <Text style={styles.transactionTitle}>{item.title}</Text>
-              <Text style={styles.transactionDate}>{item.date}</Text>
+            <View
+              key={index}
+              style={[
+                styles.transactionItem,
+                {
+                  backgroundColor: theme.colors.cardItemBackground,
+                  borderColor: theme.colors.border,
+                },
+              ]}
+            >
+              <Text
+                style={[styles.transactionTitle, { color: theme.colors.text }]}
+              >
+                {item.title}
+              </Text>
+              <Text
+                style={[
+                  styles.transactionDate,
+                  { color: theme.colors.textSecondary },
+                ]}
+              >
+                {item.date}
+              </Text>
               <Text
                 style={[
                   styles.amountText,
-                  item.type === 'income' ? styles.income : styles.expense,
+                  item.type === "income"
+                    ? { color: theme.colors.success }
+                    : { color: theme.colors.error },
                 ]}
               >
                 {item.amount}
@@ -47,21 +133,60 @@ const TransactionHistoryScreen = ({ navigation }) => {
 
         {/* Tháng 3 */}
         <View style={styles.monthSection}>
-          <View style={styles.monthHeader}>
-            <Text style={styles.monthText}>Tháng 3/2025</Text>
+          <View
+            style={[
+              styles.monthHeader,
+              { backgroundColor: theme.colors.cardHeaderBackground },
+            ]}
+          >
+            <Text style={[styles.monthText, { color: theme.colors.text }]}>
+              Tháng 3/2025
+            </Text>
           </View>
 
           {[
-            { title: 'Mua sách Come home to yourself', date: '13:24 - 17/03/2025', amount: '-58.000đ', type: 'expense' },
-            { title: 'Nạp tiền vào ví từ CODE', date: '13:24 - 17/03/2025', amount: '+100.000đ', type: 'income' },
+            {
+              title: "Mua sách Come home to yourself",
+              date: "13:24 - 17/03/2025",
+              amount: "-58.000đ",
+              type: "expense",
+            },
+            {
+              title: "Nạp tiền vào ví từ CODE",
+              date: "13:24 - 17/03/2025",
+              amount: "+100.000đ",
+              type: "income",
+            },
           ].map((item, index) => (
-            <View key={index} style={styles.transactionItem}>
-              <Text style={styles.transactionTitle}>{item.title}</Text>
-              <Text style={styles.transactionDate}>{item.date}</Text>
+            <View
+              key={index}
+              style={[
+                styles.transactionItem,
+                {
+                  backgroundColor: theme.colors.cardItemBackground,
+                  borderColor: theme.colors.border,
+                },
+              ]}
+            >
+              <Text
+                style={[styles.transactionTitle, { color: theme.colors.text }]}
+              >
+                {item.title}
+              </Text>
+              <Text
+                style={[
+                  styles.transactionDate,
+                  { color: theme.colors.textSecondary },
+                ]}
+              >
+                {item.date}
+              </Text>
               <Text
                 style={[
                   styles.amountText,
-                  item.type === 'income' ? styles.income : styles.expense,
+                  item.type === "income"
+                    ? { color: theme.colors.success }
+                    : { color: theme.colors.error },
                 ]}
               >
                 {item.amount}
@@ -70,33 +195,32 @@ const TransactionHistoryScreen = ({ navigation }) => {
           ))}
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    paddingTop: 40,
+    // backgroundColor được đặt bằng theme.colors.background trong component
+    paddingTop: 0, // Đã sử dụng SafeAreaView nên không cần paddingTop
   },
   header: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 16,
-    backgroundColor: '#fff',
+    // backgroundColor và borderColor được đặt bằng theme trong component
     borderBottomWidth: 1,
-    borderColor: '#ccc',
-    alignItems: 'center',
+    alignItems: "center",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     flex: 1,
     marginLeft: -24, // Cân chỉnh vì có nút back
   },
   summary: {
-    backgroundColor: '#fff3cd',
+    // backgroundColor được đặt bằng theme.colors.cardBackground trong component
     padding: 16,
     margin: 10,
     borderRadius: 8,
@@ -105,51 +229,50 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   linkText: {
-    color: 'blue',
+    // color được đặt bằng theme.colors.primary trong component
     marginTop: 5,
   },
   monthSection: {
     marginBottom: 16,
   },
   monthHeader: {
-    backgroundColor: '#cce5ff',
+    // backgroundColor được đặt bằng theme.colors.cardHeaderBackground trong component
     paddingVertical: 10,
     paddingHorizontal: 16,
   },
   monthText: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 16,
   },
   transactionItem: {
-    backgroundColor: '#fffbea',
+    // backgroundColor và borderColor được đặt bằng theme trong component
     padding: 10,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderColor: '#eaeaea',
     height: 70,
-    position: 'relative',
-    justifyContent: 'center',
+    position: "relative",
+    justifyContent: "center",
   },
   transactionTitle: {
-    fontWeight: '500',
+    fontWeight: "500",
     fontSize: 15,
   },
   transactionDate: {
     fontSize: 12,
-    color: 'gray',
+    // color được đặt bằng theme.colors.textSecondary trong component
   },
   amountText: {
-    position: 'absolute',
+    position: "absolute",
     right: 10,
     bottom: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 15,
   },
   income: {
-    color: 'green',
+    // color được đặt bằng theme.colors.success trong component
   },
   expense: {
-    color: 'red',
+    // color được đặt bằng theme.colors.error trong component
   },
 });
 
