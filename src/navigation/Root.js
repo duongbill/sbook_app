@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 const Root = () => {
   const { userToken, isLoading } = useContext(AuthContext);
-  
+
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

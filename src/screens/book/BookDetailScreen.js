@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  SafeAreaView
 } from 'react-native';
 import IntroTab from '../../components/IntroTab';
 import ChapterTab from '../../components/ChapterTab';
@@ -33,7 +34,7 @@ const BookDetailScreen = () => {
   const { bookId } = route.params;
 
   console.log('Book ID:', bookId);
-  
+
   const renderTabContent = () => {
     switch (activeTab) {
       case 'intro':
@@ -48,7 +49,7 @@ const BookDetailScreen = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -69,9 +70,9 @@ const BookDetailScreen = () => {
         <View style={styles.bookTitleInfo}>
           <Text style={[styles.title, { color: theme.colors.text }]}>{'Come home to yourself'}</Text>
           <Text style={[styles.author, { color: theme.colors.textSecondary }]}>{'by Déjà Rae'}</Text>
-          <Text style={[styles.price, { color: theme.colors.red}]}>{'Giá: 120.000 VNĐ'}</Text>
+          <Text style={[styles.price, { color: theme.colors.red }]}>{'Giá: 120.000 VNĐ'}</Text>
           <Text style={[styles.rating, { color: theme.colors.textSecondary }]}>{'4.6 (508 lượt đánh giá)'}</Text>
-          
+
           <View style={styles.categoryContainer}>
             {categories.map((item, index) => (
               <TouchableOpacity
@@ -127,7 +128,7 @@ const BookDetailScreen = () => {
           <Text style={[styles.buttonText, { color: theme.colors.white }]}>{'Mua ngay'}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
