@@ -6,7 +6,7 @@ const SplashScreen = ({ navigation }) => {
     // Tự động chuyển sang màn hình đăng nhập sau 5 giây
     const timer = setTimeout(() => {
       navigation.replace("Login");
-    }, 5000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [navigation]);
