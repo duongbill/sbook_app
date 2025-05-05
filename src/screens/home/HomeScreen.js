@@ -70,13 +70,11 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-            {/* Header */}
-            <Animated.View
+            <View
                 style={[
                     styles.header,
                     {
                         backgroundColor: theme.colors.surface,
-                        transform: [{ translateY: headerTranslateY }],
                     },
                 ]}
             >
@@ -85,17 +83,11 @@ const HomeScreen = ({ navigation }) => {
                 <TouchableOpacity onPress={() => navigation.navigate('SearchTab', { screen: 'Search' })}>
                     <Feather name="search" size={24} color={theme.colors.text} style={styles.searchIcon} />
                 </TouchableOpacity>
-            </Animated.View>
+            </View>
 
-            {/* Scrollable Content */}
-            <Animated.ScrollView
+            <ScrollView
                 contentContainerStyle={{ paddingTop: 120, paddingBottom: 60, paddingHorizontal: 16 }}
                 showsVerticalScrollIndicator={false}
-                onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-                    { useNativeDriver: true }
-                )}
-                scrollEventThrottle={16}
             >
                 <Section title="Sách phổ biến">
                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -146,7 +138,7 @@ const HomeScreen = ({ navigation }) => {
                         />
                     ))}
                 </Section>
-            </Animated.ScrollView>
+            </ScrollView>
         </View>
     );
 };
