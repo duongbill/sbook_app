@@ -196,6 +196,10 @@ export const getGenres = () =>
     { id: "g1", name: "Sách kinh doanh" },
     { id: "g2", name: "Sách kỹ năng" },
     { id: "g3", name: "Sách khoa học" },
+    { id: "g4", name: "Sách tâm lý" },
+    { id: "g5", name: "Sách tình cảm" },
+    { id: "g6", name: "Sách thiếu nhi" },
+    { id: "g7", name: "Sách văn học" },
   ]);
 
 export const getNewBooks = () =>

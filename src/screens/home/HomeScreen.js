@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Animated,
   StatusBar,
+  FlatList,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
@@ -22,7 +23,6 @@ import { ThemeContext } from "../../context/ThemeContext";
 import {
   getPopularBooks,
   getAuthors,
-  getGenres,
   getNewBooks,
   getBooksByGenre,
 } from "../../api/api";
@@ -36,6 +36,21 @@ const HomeScreen = ({ navigation }) => {
   const [newBooks, setNewBooks] = useState([]);
   const [businessBooks, setBusinessBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Hàm lấy thể loại từ API mới
+  const fetchGenres = async () => {
+    try {
+      const response = await fetch("https://api.vawndev.site/category");
+      const data = await response.json();
+      if (data.code === 1000 && data.result && data.result.categories) {
+        return data.result.categories;
+      }
+      return [];
+    } catch (error) {
+      console.error("Lỗi khi lấy thể loại:", error);
+      return [];
+    }
+  };
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const headerAnim = useRef(new Animated.Value(0)).current; // Separate Animated.Value for header animation
@@ -81,7 +96,7 @@ const HomeScreen = ({ navigation }) => {
           await Promise.all([
             getPopularBooks(),
             getAuthors(),
-            getGenres(),
+            fetchGenres(), // Sử dụng hàm fetchGenres mới thay vì getGenres
             getNewBooks(),
             getBooksByGenre("Kinh doanh"),
           ]);
@@ -197,11 +212,15 @@ const HomeScreen = ({ navigation }) => {
         </Section>
 
         <Section title="Thể loại">
-          <View style={styles.genreRow}>
-            {genres.map((genre) => (
-              <GenreCard key={genre.id} title={genre.name} />
-            ))}
-          </View>
+          <FlatList
+            data={genres}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <GenreCard title={item.name} />}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.genreList}
+            ItemSeparatorComponent={() => <View style={{ width: 4 }} />}
+          />
         </Section>
 
         <Section title="Sách mới">
@@ -276,6 +295,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 12,
     flexWrap: "wrap",
+  },
+  genreList: {
+    paddingVertical: 12,
+    paddingHorizontal: 5,
+    paddingBottom: 16,
   },
   loadingContainer: {
     flex: 1,
