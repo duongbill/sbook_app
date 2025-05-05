@@ -54,7 +54,7 @@ const MyWalletScreen = ({ navigation }) => {
               <Text
                 style={[styles.balance, { color: theme.colors.textSecondary }]}
               >
-                Số dư: {showBalance ? "0đ" : "*******"}
+                Số dư: {showBalance ? "100,000đ" : "*******"}
               </Text>
               <Ionicons
                 name={showBalance ? "eye-outline" : "eye-off-outline"}
