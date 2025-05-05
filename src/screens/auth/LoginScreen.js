@@ -25,9 +25,13 @@ export default function LoginScreen() {
   const navigation = useNavigation();
 
   const handleLogin = async () => {
+    if (!username.trim() || !password.trim()) {
+      Alert.alert("Lỗi", "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.");
+      return;
+    }
+
     try {
       const res = await loginApi(username, password);
-      // Kiểm tra mã code thành công
       if (res.code === 1000 && res.result && res.result.accessToken) {
         const { accessToken } = res.result;
         login(accessToken);
@@ -39,6 +43,7 @@ export default function LoginScreen() {
       Alert.alert("Lỗi", "Đăng nhập thất bại");
     }
   };
+
 
   const toggleRememberMe = () => {
     setRememberMe(!rememberMe);
