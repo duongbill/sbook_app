@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Feather, AntDesign } from "@expo/vector-icons";
-import { ThemeContext } from "../context/ThemeContext";
+import React, { useContext } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { Feather, AntDesign } from '@expo/vector-icons';
+import { ThemeContext } from '../context/ThemeContext';
 
 const BookListItem = ({
   id,
@@ -14,35 +14,40 @@ const BookListItem = ({
 }) => {
   const { theme } = useContext(ThemeContext);
 
-  return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("BookDetail", { bookId: id })}
-      style={[styles.bookListItem, { backgroundColor: theme.colors.surface }]}
-    >
-      {/* Shadow Wrapper */}
-      <View style={styles.imageShadowWrapper}>
-        <Image source={{ uri: image }} style={styles.bookListImage} />
-      </View>
 
-      <View style={styles.bookInfo}>
-        <Text style={[styles.bookTitle, { color: theme.colors.text }]}>
-          {title}
-        </Text>
-        <Text
-          style={[styles.bookAuthor, { color: theme.colors.textSecondary }]}
+    const handleBookmarkPress = () => {
+        Alert.alert("Lỗi", "Chức năng lưu sách hiện đang gặp lỗi. Vui lòng thử lại sau.");
+    };
+
+    return (
+        <TouchableOpacity
+            onPress={() => navigation.navigate('BookDetail', { bookId: id })}
+            style={[styles.bookListItem, { backgroundColor: theme.colors.surface }]}
+            activeOpacity={0.8}
         >
-          by {author}
-        </Text>
-        <Text style={[styles.rating, { color: theme.colors.textSecondary }]}>
-          <AntDesign name="star" size={16} color="rgb(255,204,0)" /> {rating}
-        </Text>
-        <Text style={[styles.bookDesc, { color: theme.colors.textSecondary }]}>
-          {description}
-        </Text>
-      </View>
-      <Feather name="bookmark" size={20} color={theme.colors.textSecondary} />
-    </TouchableOpacity>
-  );
+            <View style={styles.imageShadowWrapper}>
+                <Image source={{ uri: image }} style={styles.bookListImage} />
+            </View>
+
+            <View style={styles.bookInfo}>
+                <Text style={[styles.bookTitle, { color: theme.colors.text }]}>{title}</Text>
+                <Text style={[styles.bookAuthor, { color: theme.colors.textSecondary }]}>
+                    by {author}
+                </Text>
+                <Text style={[styles.rating, { color: theme.colors.textSecondary }]}>
+                    <AntDesign name="star" size={16} color="rgb(255,204,0)" /> {rating}
+                </Text>
+                <Text style={[styles.bookDesc, { color: theme.colors.textSecondary }]}>
+                    {description}
+                </Text>
+            </View>
+
+            <TouchableOpacity onPress={handleBookmarkPress}>
+                <Feather name="bookmark" size={20} color={theme.colors.textSecondary} />
+            </TouchableOpacity>
+        </TouchableOpacity>
+    );
+
 };
 
 const styles = StyleSheet.create({
