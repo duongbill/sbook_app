@@ -85,14 +85,6 @@ const LibraryScreen = () => {
           {item.rating}
         </Text>
 
-        <Text
-          style={[
-            styles.bookProgressLabel,
-            { color: theme.colors.textSecondary },
-          ]}
-        >
-          Đã đọc được: {item.progress}%
-        </Text>
         <View style={styles.progressBarBackground}>
           <View
             style={[
@@ -127,8 +119,8 @@ const LibraryScreen = () => {
           <TextInput
             ref={inputRef}
             style={styles.searchInput}
-            placeholder="Search"
-            placeholderTextColor={theme.colors.text + "66"}
+            placeholder="Tìm kiếm"
+            placeholderTextColor={theme.colors.text + "99"}
             value={searchQuery}
             onChangeText={(text) => setSearchQuery(text)}
           />
@@ -203,6 +195,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
+    marginTop: 15,
   },
   headerText: {
     fontSize: 26,

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,15 +8,34 @@ import {
   Platform,
   StatusBar,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import DiscoveryCard from "../../components/DiscoveryCard";
 import { ThemeContext } from "../../context/ThemeContext";
+import { getDiscoveryCards } from "../../api/api";
 
 const DiscoveryScreen = () => {
   const navigation = useNavigation();
   const { theme } = useContext(ThemeContext);
+  const [discoveryCards, setDiscoveryCards] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDiscoveryCards = async () => {
+      try {
+        const data = await getDiscoveryCards();
+        setDiscoveryCards(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching discovery cards:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchDiscoveryCards();
+  }, []);
 
   return (
     <SafeAreaView
@@ -29,12 +48,25 @@ const DiscoveryScreen = () => {
       />
       <Text style={[styles.title, { color: theme.colors.text }]}>Khám Phá</Text>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Hiển thị nhiều DiscoveryCard */}
-        {Array.from({ length: 10 }).map((_, index) => (
-          <DiscoveryCard key={index} />
-        ))}
-      </ScrollView>
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <Text style={[styles.loadingText, { color: theme.colors.text }]}>
+            Đang tải bài viết...
+          </Text>
+        </View>
+      ) : (
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {discoveryCards.map((card) => (
+            <DiscoveryCard
+              key={card.id}
+              title={card.title}
+              description={card.description}
+              image={{ uri: card.image }}
+            />
+          ))}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
@@ -80,6 +112,15 @@ const styles = StyleSheet.create({
   gachaButtonText: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
   },
 });
 

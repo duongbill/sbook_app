@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  StatusBar,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -20,9 +22,14 @@ export default function InfoScreen() {
   const [avatar, setAvatar] = useState(null);
 
   return (
-    <View
+    <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
+      <StatusBar
+        barStyle={theme.mode === "dark" ? "light-content" : "dark-content"}
+        backgroundColor="transparent"
+        translucent={true}
+      />
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -41,7 +48,7 @@ export default function InfoScreen() {
       <TextInput
         style={[
           styles.input,
-          { backgroundColor: "#e0e0e0", color: theme.colors.text },
+          { backgroundColor: theme.colors.surface, color: theme.colors.text },
         ]}
         placeholder="Nhập họ và tên"
         placeholderTextColor={theme.colors.textSecondary}
@@ -55,7 +62,7 @@ export default function InfoScreen() {
       <TextInput
         style={[
           styles.input,
-          { backgroundColor: "#e0e0e0", color: theme.colors.text },
+          { backgroundColor: theme.colors.surface, color: theme.colors.text },
         ]}
         placeholder="Nhập tên đăng nhập"
         placeholderTextColor={theme.colors.textSecondary}
@@ -69,7 +76,7 @@ export default function InfoScreen() {
       <TextInput
         style={[
           styles.input,
-          { backgroundColor: "#e0e0e0", color: theme.colors.text },
+          { backgroundColor: theme.colors.surface, color: theme.colors.text },
         ]}
         placeholder="Nhập số điện thoại"
         placeholderTextColor={theme.colors.textSecondary}
@@ -82,7 +89,7 @@ export default function InfoScreen() {
         Đổi ảnh đại diện
       </Text>
       <TouchableOpacity
-        style={[styles.avatarBox, { backgroundColor: "#e0e0e0" }]}
+        style={[styles.avatarBox, { backgroundColor: theme.colors.surface }]}
       >
         {avatar ? (
           <Image source={{ uri: avatar }} style={styles.avatar} />
@@ -103,7 +110,7 @@ export default function InfoScreen() {
       >
         <Text style={styles.confirmText}>Xác nhận</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -111,8 +118,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#fff",
-    marginTop: 40,
+    marginTop: 0, // Đã sử dụng SafeAreaView nên không cần marginTop
   },
   header: {
     flexDirection: "row",
@@ -139,7 +145,6 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 45,
-    backgroundColor: "#e0e0e0",
     borderRadius: 8,
     paddingHorizontal: 10,
     marginBottom: 15,
@@ -147,7 +152,6 @@ const styles = StyleSheet.create({
   avatarBox: {
     width: 100,
     height: 100,
-    backgroundColor: "#e0e0e0",
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -159,7 +163,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   confirmButton: {
-    backgroundColor: "#B71C1C",
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",

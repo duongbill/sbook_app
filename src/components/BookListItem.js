@@ -3,8 +3,17 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-na
 import { Feather, AntDesign } from '@expo/vector-icons';
 import { ThemeContext } from '../context/ThemeContext';
 
-const BookListItem = ({ id, image, title, author, rating, description, navigation }) => {
-    const { theme } = useContext(ThemeContext);
+const BookListItem = ({
+  id,
+  image,
+  title,
+  author,
+  rating,
+  description,
+  navigation,
+}) => {
+  const { theme } = useContext(ThemeContext);
+
 
     const handleBookmarkPress = () => {
         Alert.alert("Lỗi", "Chức năng lưu sách hiện đang gặp lỗi. Vui lòng thử lại sau.");
@@ -38,66 +47,67 @@ const BookListItem = ({ id, image, title, author, rating, description, navigatio
             </TouchableOpacity>
         </TouchableOpacity>
     );
+
 };
 
 const styles = StyleSheet.create({
-    bookListItem: {
-        position: 'relative',
-        flexDirection: 'row',
-        marginBottom: 10,
-        marginTop: 10,
-        alignItems: 'center',
-        padding: 10,
-        borderRadius: 12,
-        height: 100,
-        bottom: -10,
-        left: 5,
-        right: 10,
-    },
+  bookListItem: {
+    position: "relative",
+    flexDirection: "row",
+    marginBottom: 10,
+    marginTop: 10,
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 12,
+    height: 100,
+    bottom: -10,
+    left: 5,
+    right: 10,
+  },
 
-    imageShadowWrapper: {
-        position: 'absolute',
-        top: -10,
-        left: -10,
-        width: 80,
-        height: 100,
-        borderRadius: 8,
-        backgroundColor: '#fff', // bắt buộc cho iOS shadow
+  imageShadowWrapper: {
+    position: "absolute",
+    top: -10,
+    left: -10,
+    width: 80,
+    height: 100,
+    borderRadius: 8,
+    backgroundColor: "#fff", // bắt buộc cho iOS shadow
 
-        // Android shadow
-        elevation: 6,
+    // Android shadow
+    elevation: 6,
 
-        // iOS shadow
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-    },
+    // iOS shadow
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
 
-    bookListImage: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 8,
-    },
+  bookListImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 8,
+  },
 
-    bookInfo: {
-        flex: 1,
-        marginLeft: 70,
-    },
-    bookTitle: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    bookAuthor: {
-        fontSize: 12,
-    },
-    rating: {
-        fontSize: 12,
-        marginVertical: 2,
-    },
-    bookDesc: {
-        fontSize: 12,
-    },
+  bookInfo: {
+    flex: 1,
+    marginLeft: 70,
+  },
+  bookTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  bookAuthor: {
+    fontSize: 12,
+  },
+  rating: {
+    fontSize: 12,
+    marginVertical: 2,
+  },
+  bookDesc: {
+    fontSize: 12,
+  },
 });
 
 export default BookListItem;
