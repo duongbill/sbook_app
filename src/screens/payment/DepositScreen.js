@@ -85,12 +85,12 @@ const DepositScreen = ({ navigation }) => {
             ]}
           >
             <Image
-              source={{ uri: "https://placehold.co/40x60/png" }}
+              source={require("../../../assets/db.png")}
               style={styles.avatar}
             />
             <View style={styles.userInfo}>
               <Text style={[styles.userName, { color: theme.colors.text }]}>
-                Vũ Nguyễn Duy Anh
+                Nguyễn Hải Dương
               </Text>
               <TouchableOpacity onPress={toggleBalance}>
                 <View style={styles.balanceRow}>

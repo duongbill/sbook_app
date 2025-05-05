@@ -130,11 +130,13 @@ const SearchScreen = ({ navigation }) => {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <BookListItem
+                id={item.id}
                 image={item.image}
                 title={item.title}
                 author={item.author}
                 rating={item.rating}
                 description={item.description}
+                navigation={navigation}
               />
             )}
             scrollEnabled={false}

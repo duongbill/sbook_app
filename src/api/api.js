@@ -305,11 +305,18 @@ export const getBooksByGenre = (genre) => {
 export const fetchPopularBooks = async (keyword = "") => {
   const trimmedKeyword = keyword.trim().toLowerCase();
 
+  // Lấy tất cả sách từ các nguồn
+  const popularBooks = await getPopularBooks();
+  const newBooks = await getNewBooks();
+  const allBooks = [...popularBooks, ...newBooks, ...books];
+
   if (!trimmedKeyword) {
-    return books.sort((a, b) => b.rating - a.rating).slice(0, 3);
+    // Trả về 3 cuốn sách phổ biến nhất khi không có từ khóa tìm kiếm
+    return popularBooks.slice(0, 3);
   }
 
-  return books.filter(
+  // Tìm kiếm trong tất cả sách
+  return allBooks.filter(
     (book) =>
       book.title.toLowerCase().includes(trimmedKeyword) ||
       book.author.toLowerCase().includes(trimmedKeyword)
