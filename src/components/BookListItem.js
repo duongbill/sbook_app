@@ -1,15 +1,21 @@
 import React, { useContext } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Feather, AntDesign } from '@expo/vector-icons';
 import { ThemeContext } from '../context/ThemeContext';
 
 const BookListItem = ({ id, image, title, author, rating, description, navigation }) => {
     const { theme } = useContext(ThemeContext);
 
+    const handleBookmarkPress = () => {
+        Alert.alert("Lỗi", "Chức năng lưu sách hiện đang gặp lỗi. Vui lòng thử lại sau.");
+    };
+
     return (
         <TouchableOpacity
-            onPress={() => navigation.navigate('BookDetail', { bookId: id })} style={[styles.bookListItem, { backgroundColor: theme.colors.surface }]}>
-            {/* Shadow Wrapper */}
+            onPress={() => navigation.navigate('BookDetail', { bookId: id })}
+            style={[styles.bookListItem, { backgroundColor: theme.colors.surface }]}
+            activeOpacity={0.8}
+        >
             <View style={styles.imageShadowWrapper}>
                 <Image source={{ uri: image }} style={styles.bookListImage} />
             </View>
@@ -26,7 +32,10 @@ const BookListItem = ({ id, image, title, author, rating, description, navigatio
                     {description}
                 </Text>
             </View>
-            <Feather name="bookmark" size={20} color={theme.colors.textSecondary} />
+
+            <TouchableOpacity onPress={handleBookmarkPress}>
+                <Feather name="bookmark" size={20} color={theme.colors.textSecondary} />
+            </TouchableOpacity>
         </TouchableOpacity>
     );
 };

@@ -84,9 +84,6 @@ const LibraryScreen = () => {
           <AntDesign name="star" size={16} color="rgb(255,204,0)" />{" "}
           {item.rating}
         </Text>
-        <Text style={[styles.bookProgressLabe, { color: theme.colors.text }]}>
-          Đã đọc được: {item.progress}%
-        </Text>
 
         <Text
           style={[
