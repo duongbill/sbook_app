@@ -7,7 +7,7 @@ import CustomerTabNavigator from "./CustomerTabNavigator";
 import BookDetailScreen from "../screens/book/BookDetailScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import DiscoveryCardChild from "../components/DiscoveryCardChild";
-import InforAuthorScreen from "../screens/author/InfoAuthorScreen";
+import InfoAuthorScreen from "../screens/author/InfoAuthorScreen";
 import GachaScreen from "../screens/gacha/GachaScreen";
 
 const Stack = createStackNavigator();
@@ -33,7 +33,7 @@ const Root = () => {
             name="DiscoveryCardChild"
             component={DiscoveryCardChild}
           />
-          <Stack.Screen name="InfoAuthorScreen" component={InforAuthorScreen} />
+          <Stack.Screen name="InfoAuthorScreen" component={InfoAuthorScreen} />
           <Stack.Screen name="GachaScreen" component={GachaScreen} />
         </Stack.Navigator>
       ) : (

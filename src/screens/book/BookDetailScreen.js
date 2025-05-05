@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Dimensions,
   SafeAreaView,
   StatusBar,
+  ActivityIndicator,
 } from "react-native";
 import IntroTab from "../../components/IntroTab";
 import ChapterTab from "../../components/ChapterTab";
@@ -15,6 +16,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { ThemeContext } from "../../context/ThemeContext";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Image } from "react-native";
+import { getBookById } from "../../api/api";
 
 const { width } = Dimensions.get("window");
 
@@ -64,13 +66,30 @@ const BookDetailScreen = () => {
   const categories = ["Tình cảm", "Chữa lành", "Tâm lý"];
   const route = useRoute();
   const { bookId } = route.params;
+  const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  console.log("Book ID:", bookId);
+  useEffect(() => {
+    const fetchBookDetails = async () => {
+      try {
+        const bookData = await getBookById(bookId);
+        console.log("Book data fetched:", bookData);
+        console.log("Book description:", bookData.description);
+        setBook(bookData);
+      } catch (error) {
+        console.error("Lỗi khi lấy thông tin sách:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBookDetails();
+  }, [bookId]);
 
   const renderTabContent = () => {
     switch (activeTab) {
       case "intro":
-        return <IntroTab />;
+        return <IntroTab description={book?.description} />;
       case "chapter":
         return <ChapterTab />;
       case "review":
@@ -112,168 +131,196 @@ const BookDetailScreen = () => {
         </View>
       </View>
 
-      {/* Book Info */}
-      <View style={styles.bookInfo}>
-        <Image
-          source={require("../../../assets/dcvimg.png")}
-          style={styles.bookImage}
-        />
-        <View style={styles.bookTitleInfo}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>
-            {"Come home to yourself"}
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <Text style={[styles.loadingText, { color: theme.colors.text }]}>
+            Đang tải thông tin sách...
           </Text>
-          <Text style={[styles.author, { color: theme.colors.textSecondary }]}>
-            {"by Déjà Rae"}
-          </Text>
-          <Text style={[styles.price, { color: theme.colors.red }]}>
-            {"Giá: 120.000 VNĐ"}
-          </Text>
-          <Text style={[styles.rating, { color: theme.colors.textSecondary }]}>
-            {"4.6 (508 lượt đánh giá)"}
-          </Text>
-
-          <View style={styles.categoryContainer}>
-            {categories.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                style={[
-                  styles.categoryItem,
-                  {
-                    backgroundColor: theme.colors.surface,
-                    borderColor: theme.colors.border,
-                  },
-                ]}
-                onPress={() => console.log(`Bạn chọn: ${item}`)}
-              >
-                <Text
-                  style={[
-                    styles.categoryText,
-                    { color: theme.colors.textSecondary },
-                  ]}
-                >
-                  {item}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
         </View>
-      </View>
+      ) : (
+        <>
+          {/* Book Info */}
+          <View style={styles.bookInfo}>
+            <Image
+              source={
+                book?.image
+                  ? { uri: book.image }
+                  : require("../../../assets/db.png")
+              }
+              style={styles.bookImage}
+            />
+            <View style={styles.bookTitleInfo}>
+              <Text style={[styles.title, { color: theme.colors.text }]}>
+                {book?.title}
+              </Text>
+              <Text
+                style={[styles.author, { color: theme.colors.textSecondary }]}
+              >
+                by {book?.author}
+              </Text>
+              <Text style={[styles.price, { color: theme.colors.red }]}>
+                {"Giá: " + (book?.price || "120.000 VNĐ")}
+              </Text>
+              <Text
+                style={[styles.rating, { color: theme.colors.textSecondary }]}
+              >
+                {book?.rating} (
+                {book?.rating ? Math.floor(book.rating * 100) : 0} lượt đánh
+                giá)
+              </Text>
 
-      {/* Tabs */}
-      <View
-        style={[styles.tabContainer, { backgroundColor: theme.colors.primary }]}
-      >
-        <TouchableOpacity
-          style={[
-            styles.tabButton,
-            activeTab === "intro" && [
-              styles.activeTab,
-              { backgroundColor: theme.colors.surface },
-            ],
-          ]}
-          onPress={() => setActiveTab("intro")}
-        >
-          <Text
+              <View style={styles.categoryContainer}>
+                {categories.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={[
+                      styles.categoryItem,
+                      {
+                        backgroundColor: theme.colors.surface,
+                        borderColor: theme.colors.border,
+                      },
+                    ]}
+                    onPress={() => console.log(`Bạn chọn: ${item}`)}
+                  >
+                    <Text
+                      style={[
+                        styles.categoryText,
+                        { color: theme.colors.textSecondary },
+                      ]}
+                    >
+                      {item}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          </View>
+        </>
+      )}
+
+      {!loading && (
+        <>
+          {/* Tabs */}
+          <View
             style={[
-              styles.tabText,
-              activeTab === "intro" && { color: theme.colors.text },
+              styles.tabContainer,
+              { backgroundColor: theme.colors.primary },
             ]}
           >
-            {"Giới thiệu"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.tabButton,
-            activeTab === "chapter" && [
-              styles.activeTab,
-              { backgroundColor: theme.colors.surface },
-            ],
-          ]}
-          onPress={() => setActiveTab("chapter")}
-        >
-          <Text
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === "intro" && [
+                  styles.activeTab,
+                  { backgroundColor: theme.colors.surface },
+                ],
+              ]}
+              onPress={() => setActiveTab("intro")}
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === "intro" && { color: theme.colors.text },
+                ]}
+              >
+                {"Giới thiệu"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === "chapter" && [
+                  styles.activeTab,
+                  { backgroundColor: theme.colors.surface },
+                ],
+              ]}
+              onPress={() => setActiveTab("chapter")}
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === "chapter" && { color: theme.colors.text },
+                ]}
+              >
+                {"Chương"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === "review" && [
+                  styles.activeTab,
+                  { backgroundColor: theme.colors.surface },
+                ],
+              ]}
+              onPress={() => setActiveTab("review")}
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === "review" && { color: theme.colors.text },
+                ]}
+              >
+                {"Đánh giá"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Tab Content */}
+          <View
             style={[
-              styles.tabText,
-              activeTab === "chapter" && { color: theme.colors.text },
+              styles.contentContainer,
+              { backgroundColor: theme.colors.surface },
             ]}
           >
-            {"Chương"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.tabButton,
-            activeTab === "review" && [
-              styles.activeTab,
-              { backgroundColor: theme.colors.surface },
-            ],
-          ]}
-          onPress={() => setActiveTab("review")}
-        >
-          <Text
+            {renderTabContent()}
+          </View>
+
+          {/* Fixed Bottom Buttons */}
+          <View
             style={[
-              styles.tabText,
-              activeTab === "review" && { color: theme.colors.text },
+              styles.fixedBottom,
+              { backgroundColor: theme.colors.background },
             ]}
           >
-            {"Đánh giá"}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Tab Content */}
-      <View
-        style={[
-          styles.contentContainer,
-          { backgroundColor: theme.colors.surface },
-        ]}
-      >
-        {renderTabContent()}
-      </View>
-
-      {/* Fixed Bottom Buttons */}
-      <View
-        style={[
-          styles.fixedBottom,
-          { backgroundColor: theme.colors.background },
-        ]}
-      >
-        <TouchableOpacity
-          style={[
-            styles.shareButton,
-            { backgroundColor: theme.colors.buttonSecondary },
-          ]}
-        >
-          <Icon
-            name="share-social-outline"
-            size={20}
-            color={theme.colors.text}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.previewButton,
-            { backgroundColor: theme.colors.surface },
-          ]}
-        >
-          <Icon name="book-outline" size={20} color={theme.colors.text} />
-          <Text style={[styles.buttonText, { color: theme.colors.text }]}>
-            {"Đọc thử"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.previewButton,
-            { backgroundColor: theme.colors.primary },
-          ]}
-        >
-          <Icon name="cash-outline" size={20} color={theme.colors.white} />
-          <Text style={[styles.buttonText, { color: theme.colors.white }]}>
-            {"Mua ngay"}
-          </Text>
-        </TouchableOpacity>
-      </View>
+            <TouchableOpacity
+              style={[
+                styles.shareButton,
+                { backgroundColor: theme.colors.buttonSecondary },
+              ]}
+            >
+              <Icon
+                name="share-social-outline"
+                size={20}
+                color={theme.colors.text}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.previewButton,
+                { backgroundColor: theme.colors.surface },
+              ]}
+            >
+              <Icon name="book-outline" size={20} color={theme.colors.text} />
+              <Text style={[styles.buttonText, { color: theme.colors.text }]}>
+                {"Đọc thử"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.previewButton,
+                { backgroundColor: theme.colors.primary },
+              ]}
+            >
+              <Icon name="cash-outline" size={20} color={theme.colors.white} />
+              <Text style={[styles.buttonText, { color: theme.colors.white }]}>
+                {"Mua ngay"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };
@@ -283,6 +330,15 @@ export default BookDetailScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
   },
   header: {
     flexDirection: "row",
