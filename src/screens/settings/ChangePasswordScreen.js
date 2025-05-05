@@ -32,7 +32,7 @@ export default function ChangePasswordScreen() {
 
     // Xử lý đổi mật khẩu ở đây
     Alert.alert("Thành công", "Đổi mật khẩu thành công", [
-      { text: "OK", onPress: () => navigation.goBack() }
+      { text: "OK", onPress: () => navigation.goBack() },
     ]);
   };
 
@@ -62,7 +62,7 @@ export default function ChangePasswordScreen() {
         <TextInput
           style={[
             styles.input,
-            { backgroundColor: theme.colors.surface, color: theme.colors.text },
+            { backgroundColor: "#e0e0e0", color: theme.colors.text },
           ]}
           placeholder="Nhập mật khẩu cũ"
           placeholderTextColor={theme.colors.textSecondary}
@@ -77,7 +77,7 @@ export default function ChangePasswordScreen() {
         <TextInput
           style={[
             styles.input,
-            { backgroundColor: theme.colors.surface, color: theme.colors.text },
+            { backgroundColor: "#e0e0e0", color: theme.colors.text },
           ]}
           placeholder="Nhập mật khẩu mới"
           placeholderTextColor={theme.colors.textSecondary}
@@ -92,7 +92,7 @@ export default function ChangePasswordScreen() {
         <TextInput
           style={[
             styles.input,
-            { backgroundColor: theme.colors.surface, color: theme.colors.text },
+            { backgroundColor: "#e0e0e0", color: theme.colors.text },
           ]}
           placeholder="Nhập lại mật khẩu mới"
           placeholderTextColor={theme.colors.textSecondary}
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 20,
     paddingBottom: 10,
+    marginTop: 30,
   },
   backButton: {
     padding: 8,

@@ -1,23 +1,31 @@
+import React, { useContext } from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { ThemeContext } from "../context/ThemeContext";
+import { useNavigation } from "@react-navigation/native";
 
-import React, { useContext } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { ThemeContext } from '../context/ThemeContext';
+const AuthorCard = ({ img, name, id }) => {
+  const { theme } = useContext(ThemeContext);
+  const navigation = useNavigation();
 
-const AuthorCard = ({ img, name }) => {
-    const { theme } = useContext(ThemeContext);
+  const handlePress = () => {
+    navigation.navigate("InfoAuthorScreen", {
+      authorId: id,
+      authorName: name,
+      authorImage: img,
+    });
+  };
 
-    return (
-        <View style={styles.authorCard}>
-            <Image source={{ uri: img }} style={styles.authorImage} />
-            <Text
-                style={[styles.authorName, { color: theme.colors.text }]}
-                numberOfLines={2}
-            >
-                {name}
-            </Text>
-        </View>
-    );
-
+  return (
+    <TouchableOpacity style={styles.authorCard} onPress={handlePress}>
+      <Image source={{ uri: img }} style={styles.authorImage} />
+      <Text
+        style={[styles.authorName, { color: theme.colors.text }]}
+        numberOfLines={2}
+      >
+        {name}
+      </Text>
+    </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({

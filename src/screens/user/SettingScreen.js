@@ -10,13 +10,14 @@ import {
   Linking,
 } from "react-native";
 import { ThemeContext } from "../../context/ThemeContext";
-import { useNavigation, CommonActions } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { AuthContext } from "../../context/AuthContext";
 
 const settings = [
   { icon: "person-outline", label: "Thông tin cá nhân" },
   { icon: "lock-closed-outline", label: "Đổi mật khẩu" },
-  { icon: "notifications-outline", label: "Thông báo" },
+  { icon: "wallet-outline", label: "Ví của tôi" },
   { icon: "language-outline", label: "Ngôn ngữ" },
   { icon: "moon-outline", label: "Chế độ tối" },
   { icon: "gift-outline", label: "Vòng quay may mắn" },
@@ -27,16 +28,21 @@ const settings = [
 
 const SettingScreen = () => {
   const { theme } = useContext(ThemeContext);
+  const { logout } = useContext(AuthContext);
   const navigation = useNavigation();
   const [supportModalVisible, setSupportModalVisible] = useState(false);
 
   // Số điện thoại kỹ thuật viên
-  const techSupportPhone = "0123456789";
+  const techSupportPhone = "0985082004";
 
   // Hàm gọi điện thoại
   const callTechSupport = () => {
     Linking.openURL(`tel:${techSupportPhone}`);
     setSupportModalVisible(false);
+  };
+
+  const handleLogout = async () => {
+    await logout();
   };
 
   return (
@@ -73,14 +79,6 @@ const SettingScreen = () => {
               Số dư : 100,000đ
             </Text>
           </View>
-          <TouchableOpacity
-            style={[
-              styles.editIcon,
-              { backgroundColor: theme.colors.buttonSecondary },
-            ]}
-          >
-            <Icon name="pencil-outline" size={18} color={theme.colors.text} />
-          </TouchableOpacity>
         </View>
 
         {/* Setting items */}
@@ -90,7 +88,7 @@ const SettingScreen = () => {
             style={[styles.item, { borderBottomColor: theme.colors.text }]}
             onPress={() => {
               if (item.label === "Đăng xuất") {
-                // Handle logout logic here
+                handleLogout();
                 console.log("Logged out");
               } else if (item.label === "Chế độ tối") {
                 navigation.navigate("Mode");
@@ -134,6 +132,14 @@ const SettingScreen = () => {
                   })
                 );
                 console.log("Navigating to SecurityPolicy screen");
+              } else if (item.label === "Ví của tôi") {
+                // Điều hướng đến màn hình ví của tôi
+                navigation.dispatch(
+                  CommonActions.navigate({
+                    name: "MyWallet",
+                  })
+                );
+                console.log("Navigating to MyWallet screen");
               } else if (item.label === "Hỗ trợ từ kỹ thuật viên") {
                 // Hiển thị modal số kỹ thuật viên
                 setSupportModalVisible(true);
@@ -215,10 +221,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
-    marginTop: 50,
     marginLeft: 18,
     marginRight: 18,
-    marginBottom: 60,
+    marginBottom: 10,
   },
   profileContainer: {
     borderRadius: 12,

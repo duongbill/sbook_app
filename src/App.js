@@ -1,18 +1,30 @@
-
 import React from 'react';
-import AppNavigator from './navigation/AppNavigator';
-import AuthStack from './navigation/AuthStack';
-import { NavigationContainer } from '@react-navigation/native';
+import Root from './navigation/Root';
+import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
-import TestScreen from './test/testScreens/TestScreen';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 
-export default function App() {
+const App = () => {
   return (
-    <TestScreen />
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        barStyle="dark-content" // hoặc "light-content" tùy màu nền
+        backgroundColor="transparent"
+        translucent={true}
+      />
+    <ThemeProvider>
+      <AuthProvider>
+        <Root />
+      </AuthProvider>
+    </ThemeProvider>
+    </SafeAreaView>
   );
-  // return (
-  //   <NavigationContainer>
-  //     <AuthStack />
-  //   </NavigationContainer>
-  // );
-}
+};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
+export default App;
+

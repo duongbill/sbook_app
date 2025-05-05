@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CustomerScreen from '../screens/user/CustomerScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from '../context/ThemeContext';
-import SettingStackNavigator from './SettingStackNavigator';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
-import MyBookScreen from '../screens/user/MyBookScreen';
+import HomeScreen from '../screens/home/HomeScreen';
+import LibraryScreen from '../screens/book/LibraryScreen';
+import SettingScreen from '../screens/user/SettingScreen';
+import DiscoveryScreen from '../screens/discovery/DiscoveryScreen';
+import SearchStack from './SearchStack';
+import SettingStackNavigator from './SettingStackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,10 +45,8 @@ export default function CustomerTabNavigator() {
         },
         tabBarStyle: {
           position: 'absolute',
-          bottom: 10,
           marginLeft: 18,
           marginRight: 18,
-          marginBottom: 14,
           elevation: 5,
           backgroundColor: theme.colors.bottomTabColor,
           borderRadius: 20,
@@ -70,8 +71,10 @@ export default function CustomerTabNavigator() {
         },
       })}
     >
-      <Tab.Screen name="Trang Chủ" component={CustomerScreen} />
-      <Tab.Screen name="Sách của tôi" component={MyBookScreen} />
+      <Tab.Screen name="Trang Chủ" component={HomeScreen} />
+      <Tab.Screen name="Sách của tôi" component={LibraryScreen} />
+      <Tab.Screen name="Khám Phá" component={DiscoveryScreen} />
+      <Tab.Screen name="Tìm Kiếm" component={SearchStack} />
       <Tab.Screen name="Cài đặt" component={SettingStackNavigator}/>
     </Tab.Navigator>
   );
