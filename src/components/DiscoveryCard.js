@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { ThemeContext } from "../context/ThemeContext";
 
 const truncateWords = (text, maxWords) => {
   const words = text.split(" ");
@@ -10,6 +11,7 @@ const truncateWords = (text, maxWords) => {
 
 const DiscoveryCard = ({ title, description, image }) => {
   const navigation = useNavigation();
+  const { theme } = useContext(ThemeContext);
 
   const handlePress = () => {
     navigation.navigate("DiscoveryCardChild", {
@@ -23,15 +25,17 @@ const DiscoveryCard = ({ title, description, image }) => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <View style={styles.card}>
+      <View style={[styles.card, { backgroundColor: theme.colors.surface }]}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>
+          <Text style={[styles.title, { color: theme.colors.text }]}>
             {truncateWords(
               title || "'Cọng rơm hy vọng' - đứng dậy sau vấp ngã",
               10
             )}
           </Text>
-          <Text style={styles.description}>
+          <Text
+            style={[styles.description, { color: theme.colors.textSecondary }]}
+          >
             {truncateWords(
               description ||
                 "Từ mất niềm tin vì liên tiếp thất bại, làm ăn thua lỗ, nhân vật Seong Gon quyết thay đổi để vực dậy bản thân, trong 'Cọng rơm hy vọng'.",
@@ -50,13 +54,18 @@ const DiscoveryCard = ({ title, description, image }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#f4f4f4",
     borderRadius: 10,
     margin: 20,
-    height: 150,
+    width: 370,
+    height: 160,
     paddingRight: 130, // đẩy text sang phải tránh ảnh
     paddingVertical: 20,
     position: "relative", // cần để ảnh position absolute bám theo
+    elevation: 2, // thêm đổ bóng nhẹ cho Android
+    shadowColor: "#000", // đổ bóng cho iOS
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
   },
 
   image: {
@@ -80,7 +89,6 @@ const styles = StyleSheet.create({
   description: {
     marginLeft: 10,
     fontSize: 14,
-    color: "#555",
   },
 });
 

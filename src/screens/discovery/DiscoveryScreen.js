@@ -29,26 +29,6 @@ const DiscoveryScreen = () => {
         {Array.from({ length: 10 }).map((_, index) => (
           <DiscoveryCard key={index} />
         ))}
-
-        {/* Gacha button */}
-        <TouchableOpacity
-          style={[
-            styles.gachaButton,
-            { backgroundColor: theme.colors.bottomTabColor },
-          ]}
-          onPress={() => navigation.navigate("GachaScreen")}
-          activeOpacity={0.8}
-        >
-          <Ionicons
-            name="gift-outline"
-            size={24}
-            color={theme.colors.text}
-            style={styles.gachaIcon}
-          />
-          <Text style={[styles.gachaButtonText, { color: theme.colors.text }]}>
-            Quay Gacha
-          </Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
