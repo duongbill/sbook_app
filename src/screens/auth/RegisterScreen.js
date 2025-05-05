@@ -7,7 +7,9 @@ import {
   StyleSheet,
   Alert,
   Image,
+  StatusBar,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { register } from "../../api/auth";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -49,7 +51,12 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
       <View style={styles.header}>
         <Image
           source={require("../../../assets/regi.png")}
@@ -139,7 +146,7 @@ export default function RegisterScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
