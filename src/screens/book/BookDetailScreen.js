@@ -115,7 +115,7 @@ const BookDetailScreen = () => {
       {/* Book Info */}
       <View style={styles.bookInfo}>
         <Image
-          source={require("../../../assets/adaptive-icon.png")}
+          source={require("../../../assets/dcvimg.png")}
           style={styles.bookImage}
         />
         <View style={styles.bookTitleInfo}>
@@ -386,13 +386,14 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 16,
     marginRight: 16,
-    minHeight: 330,
+    minHeight: 350, // Tăng chiều cao tối thiểu từ 330 lên 350 để đảm bảo nội dung không bị che khuất
     borderBottomLeftRadius: 25,
     borderBottomRightRadius: 25,
+    marginBottom: 30, // Thêm marginBottom để tạo khoảng cách với các nút ở dưới
   },
   fixedBottom: {
     position: "absolute",
-    bottom: 0,
+    bottom: 20, // Tăng giá trị bottom từ 0 lên 20 để các nút hiển thị cao hơn
     flexDirection: "row",
     width: width,
     padding: 10,
