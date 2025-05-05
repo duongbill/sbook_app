@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,43 +14,57 @@ import { ThemeContext } from "../../context/ThemeContext";
 import Icon from "react-native-vector-icons/Ionicons";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { getNewBooks, getPopularBooks } from "../../api/api";
 
+// Dữ liệu sách mặc định với trạng thái
 const booksData = [
   {
-    id: "1",
-    title: "Come home to yourself",
-    author: "By Dujie Ran",
-    rating: 4.4,
+    id: "n1",
+    title: "Tâm Lý Học Về Tiền",
+    author: "Morgan Housel",
+    rating: 4.6,
     progress: 50,
-    image: require("../../../assets/sach.png"),
-    status: "reading", // Thêm trạng thái
+    image:
+      "https://nhasachphuongnam.com/images/detailed/191/tam-ly-hoc-ve-tien.jpg",
+    description:
+      "Khám phá cách con người suy nghĩ về tiền bạc và cách để đưa ra quyết định tài chính thông minh hơn.",
+    status: "reading",
   },
   {
-    id: "2",
-    title: "The Power of Now",
-    author: "By Eckhart Tolle",
-    rating: 4.8,
+    id: "n2",
+    title: "Làm Việc Chuyên Sâu",
+    author: "Cal Newport",
+    rating: 4.6,
     progress: 30,
-    image: require("../../../assets/sach.png"),
-    status: "saved", // Thêm trạng thái
+    image:
+      "https://thuvienonline.org/wp-content/uploads/2022/08/deep-work-lam-ra-lam-choi-ra-choi.jpg",
+    description:
+      "Phương pháp làm việc tập trung cao độ trong thế giới đầy phân tâm.",
+    status: "saved",
   },
   {
-    id: "3",
-    title: "Atomic Habits",
-    author: "By James Clear",
-    rating: 4.9,
+    id: "b4",
+    title: "Thói Quen Nguyên Tử",
+    author: "James Clear",
+    rating: 4.8,
     progress: 70,
-    image: require("../../../assets/sach.png"),
-    status: "purchased", // Thêm trạng thái
+    image:
+      "https://salt.tikicdn.com/cache/w1200/ts/product/7c/e8/34/4d3636aadb471cad0bf2f45089f4b536.jpg",
+    description:
+      "Thay đổi nhỏ, kết quả lớn - Cách xây dựng thói quen tốt và phá vỡ thói quen xấu.",
+    status: "purchased",
   },
   {
-    id: "4",
-    title: "Deep Work",
-    author: "By Cal Newport",
-    rating: 4.7,
+    id: "n4",
+    title: "Hiểu Về Trái Tim",
+    author: "Minh Niệm",
+    rating: 4.8,
     progress: 90,
-    image: require("../../../assets/sach.png"),
-    status: "reading", // Thêm trạng thái
+    image:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1473045794i/13640125.jpg",
+    description:
+      "Hành trình khám phá bản chất của tâm hồn và cách chữa lành những tổn thương tinh thần.",
+    status: "reading",
   },
 ];
 
@@ -72,7 +86,7 @@ const LibraryScreen = () => {
       onPress={() => navigation.navigate("BookDetail", { bookId: item.id })}
       style={[styles.bookItem, { backgroundColor: theme.colors.surface }]}
     >
-      <Image source={item.image} style={styles.bookImage} />
+      <Image source={{ uri: item.image }} style={styles.bookImage} />
       <View style={styles.bookInfo}>
         <Text style={[styles.bookTitle, { color: theme.colors.text }]}>
           {item.title}
@@ -84,7 +98,7 @@ const LibraryScreen = () => {
           <AntDesign name="star" size={16} color="rgb(255,204,0)" />{" "}
           {item.rating}
         </Text>
-        <Text style={[styles.bookProgressLabe, { color: theme.colors.text }]}>
+        <Text style={[styles.bookProgressLabel, { color: theme.colors.text }]}>
           Đã đọc được: {item.progress}%
         </Text>
 
