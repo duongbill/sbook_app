@@ -22,6 +22,11 @@ const DiscoveryScreen = () => {
     <SafeAreaView
       style={[styles.safeArea, { backgroundColor: theme.colors.background }]}
     >
+      <StatusBar
+        barStyle={theme.mode === "dark" ? "light-content" : "dark-content"}
+        backgroundColor="transparent"
+        translucent={true}
+      />
       <Text style={[styles.title, { color: theme.colors.text }]}>Khám Phá</Text>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -37,14 +42,14 @@ const DiscoveryScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight + 10 : 10, // Thêm 10px vào paddingTop
     alignItems: "center", // Căn giữa toàn bộ nội dung theo chiều ngang
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
-    marginTop: 15, // Thay đổi từ -40 thành 15 để giảm khoảng cách lề trên
+    marginTop: 10, // Giảm marginTop để bù lại phần paddingTop đã tăng
   },
   scrollContent: {
     flexGrow: 1,
