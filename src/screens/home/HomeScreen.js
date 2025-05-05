@@ -72,14 +72,77 @@ const HomeScreen = ({ navigation }) => {
 
   if (loading) {
     return (
-      <View
-        style={[
-          styles.loadingContainer,
-          { backgroundColor: theme.colors.background },
-        ]}
-      >
-        <ActivityIndicator size="large" color={theme.colors.text} />
-      </View>
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+            <View
+                style={[
+                    styles.header,
+                    {
+                        backgroundColor: theme.colors.surface,
+                    },
+                ]}
+            >
+                <Image source={{ uri: 'https://placehold.co/40/png' }} style={styles.avatar} />
+                <Text style={[styles.greeting, { color: theme.colors.text }]}>Xin chào, Duy Anh</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('SearchTab', { screen: 'Search' })}>
+                    <Feather name="search" size={24} color={theme.colors.text} style={styles.searchIcon} />
+                </TouchableOpacity>
+            </View>
+
+            <ScrollView
+                contentContainerStyle={{ paddingTop: 120, paddingBottom: 60, paddingHorizontal: 16 }}
+                showsVerticalScrollIndicator={false}
+            >
+                <Section title="Sách phổ biến">
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        {popularBooks.map((book) => (
+                            <BookCard key={book.id} title={book.title} author={book.author} image={book.image} />
+                        ))}
+                    </ScrollView>
+                </Section>
+
+                <Section title="Tác giả nổi tiếng">
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        {authors.map((author) => (
+                            <AuthorCard key={author.id} img={author.image} name={author.name} />
+                        ))}
+                    </ScrollView>
+                </Section>
+
+                <Section title="Thể loại">
+                    <View style={styles.genreRow}>
+                        {genres.map((genre) => (
+                            <GenreCard key={genre.id} title={genre.name} />
+                        ))}
+                    </View>
+                </Section>
+
+                <Section title="Sách mới">
+                    {newBooks.map((book) => (
+                        <BookListItem
+                            key={book.id}
+                            image={book.image}
+                            title={book.title}
+                            author={book.author}
+                            rating={book.rating}
+                            description={book.description}
+                        />
+                    ))}
+                </Section>
+
+                <Section title="Sách kinh doanh">
+                    {businessBooks.map((book) => (
+                        <BookListItem
+                            key={book.id}
+                            image={book.image}
+                            title={book.title}
+                            author={book.author}
+                            rating={book.rating}
+                            description={book.description}
+                        />
+                    ))}
+                </Section>
+            </ScrollView>
+        </View>
     );
   }
 
