@@ -39,7 +39,10 @@ export default function SecurityPolicyScreen() {
             1. Thông tin chúng tôi thu thập
           </Text>
           <Text style={[styles.sectionContent, { color: theme.colors.text }]}>
-            Chúng tôi thu thập thông tin cá nhân của bạn khi bạn đăng ký tài khoản, sử dụng dịch vụ của chúng tôi, hoặc liên hệ với chúng tôi. Thông tin này có thể bao gồm tên, địa chỉ email, số điện thoại, và các thông tin khác mà bạn cung cấp.
+            Chúng tôi thu thập thông tin cá nhân của bạn khi bạn đăng ký tài
+            khoản, sử dụng dịch vụ của chúng tôi, hoặc liên hệ với chúng tôi.
+            Thông tin này có thể bao gồm tên, địa chỉ email, số điện thoại, và
+            các thông tin khác mà bạn cung cấp.
           </Text>
         </View>
 
@@ -48,7 +51,9 @@ export default function SecurityPolicyScreen() {
             2. Cách chúng tôi sử dụng thông tin
           </Text>
           <Text style={[styles.sectionContent, { color: theme.colors.text }]}>
-            Chúng tôi sử dụng thông tin của bạn để cung cấp, duy trì và cải thiện dịch vụ của chúng tôi, để liên lạc với bạn, và để bảo vệ quyền lợi của chúng tôi và người dùng khác.
+            Chúng tôi sử dụng thông tin của bạn để cung cấp, duy trì và cải
+            thiện dịch vụ của chúng tôi, để liên lạc với bạn, và để bảo vệ quyền
+            lợi của chúng tôi và người dùng khác.
           </Text>
         </View>
 
@@ -57,7 +62,9 @@ export default function SecurityPolicyScreen() {
             3. Bảo mật thông tin
           </Text>
           <Text style={[styles.sectionContent, { color: theme.colors.text }]}>
-            Chúng tôi áp dụng các biện pháp bảo mật hợp lý để bảo vệ thông tin cá nhân của bạn khỏi mất mát, truy cập trái phép, sử dụng sai mục đích, thay đổi hoặc tiết lộ.
+            Chúng tôi áp dụng các biện pháp bảo mật hợp lý để bảo vệ thông tin
+            cá nhân của bạn khỏi mất mát, truy cập trái phép, sử dụng sai mục
+            đích, thay đổi hoặc tiết lộ.
           </Text>
         </View>
 
@@ -66,7 +73,9 @@ export default function SecurityPolicyScreen() {
             4. Chia sẻ thông tin
           </Text>
           <Text style={[styles.sectionContent, { color: theme.colors.text }]}>
-            Chúng tôi không bán, trao đổi hoặc chuyển giao thông tin cá nhân của bạn cho bên thứ ba mà không có sự đồng ý của bạn, trừ khi cần thiết để cung cấp dịch vụ hoặc theo yêu cầu của pháp luật.
+            Chúng tôi không bán, trao đổi hoặc chuyển giao thông tin cá nhân của
+            bạn cho bên thứ ba mà không có sự đồng ý của bạn, trừ khi cần thiết
+            để cung cấp dịch vụ hoặc theo yêu cầu của pháp luật.
           </Text>
         </View>
 
@@ -75,7 +84,9 @@ export default function SecurityPolicyScreen() {
             5. Quyền của bạn
           </Text>
           <Text style={[styles.sectionContent, { color: theme.colors.text }]}>
-            Bạn có quyền truy cập, sửa đổi hoặc xóa thông tin cá nhân của mình. Bạn cũng có thể yêu cầu chúng tôi hạn chế xử lý thông tin của bạn hoặc phản đối việc xử lý đó.
+            Bạn có quyền truy cập, sửa đổi hoặc xóa thông tin cá nhân của mình.
+            Bạn cũng có thể yêu cầu chúng tôi hạn chế xử lý thông tin của bạn
+            hoặc phản đối việc xử lý đó.
           </Text>
         </View>
 
@@ -84,7 +95,9 @@ export default function SecurityPolicyScreen() {
             6. Thay đổi chính sách
           </Text>
           <Text style={[styles.sectionContent, { color: theme.colors.text }]}>
-            Chúng tôi có thể cập nhật chính sách bảo mật này theo thời gian. Chúng tôi sẽ thông báo cho bạn về bất kỳ thay đổi nào bằng cách đăng chính sách mới trên trang web của chúng tôi.
+            Chúng tôi có thể cập nhật chính sách bảo mật này theo thời gian.
+            Chúng tôi sẽ thông báo cho bạn về bất kỳ thay đổi nào bằng cách đăng
+            chính sách mới trên App của chúng tôi.
           </Text>
         </View>
 
@@ -93,12 +106,15 @@ export default function SecurityPolicyScreen() {
             7. Liên hệ
           </Text>
           <Text style={[styles.sectionContent, { color: theme.colors.text }]}>
-            Nếu bạn có bất kỳ câu hỏi nào về chính sách bảo mật này, vui lòng liên hệ với chúng tôi qua email: support@example.com
+            Nếu bạn có bất kỳ câu hỏi nào về chính sách bảo mật này, vui lòng
+            liên hệ với chúng tôi qua email: sbook25@gmail.com
           </Text>
         </View>
 
         <View style={styles.footer}>
-          <Text style={[styles.footerText, { color: theme.colors.textSecondary }]}>
+          <Text
+            style={[styles.footerText, { color: theme.colors.textSecondary }]}
+          >
             Cập nhật lần cuối: 01/06/2023
           </Text>
         </View>
