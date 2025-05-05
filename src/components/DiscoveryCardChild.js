@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     position: "absolute",
-    top: 0, // Đặt nút back button cao hơn để không đè lên chữ
+    top: 60, // Đặt nút back button cao hơn để không đè lên chữ
     left: 0,
     right: 0,
     zIndex: 10,
