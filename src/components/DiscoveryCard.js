@@ -30,7 +30,7 @@ const DiscoveryCard = ({ title, description, image }) => {
           <Text style={[styles.title, { color: theme.colors.text }]}>
             {truncateWords(
               title || "'Cọng rơm hy vọng' - đứng dậy sau vấp ngã",
-              10
+              8
             )}
           </Text>
           <Text

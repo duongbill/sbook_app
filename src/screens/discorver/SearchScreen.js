@@ -150,7 +150,7 @@ const SearchScreen = ({ navigation }) => {
               data={authors}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <AuthorCard img={item.img} name={item.name} />
+                <AuthorCard id={item.id} img={item.img} name={item.name} />
               )}
               horizontal
               showsHorizontalScrollIndicator={false}

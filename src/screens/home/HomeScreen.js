@@ -134,11 +134,11 @@ const HomeScreen = ({ navigation }) => {
         ]}
       >
         <Image
-          source={{ uri: "https://placehold.co/40/png" }}
+          source={require("../../../assets/db.png")}
           style={styles.avatar}
         />
         <Text style={[styles.greeting, { color: theme.colors.text }]}>
-          Xin chào, Duy Anh
+          Xin chào, Hai Duong
         </Text>
         <TouchableOpacity
           onPress={() => navigation.navigate("SearchTab", { screen: "Search" })}
@@ -174,6 +174,7 @@ const HomeScreen = ({ navigation }) => {
             {popularBooks.map((book) => (
               <BookCard
                 key={book.id}
+                id={book.id}
                 title={book.title}
                 author={book.author}
                 image={book.image}
@@ -187,6 +188,7 @@ const HomeScreen = ({ navigation }) => {
             {authors.map((author) => (
               <AuthorCard
                 key={author.id}
+                id={author.id}
                 img={author.image}
                 name={author.name}
               />
