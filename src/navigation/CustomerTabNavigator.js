@@ -9,6 +9,7 @@ import SettingScreen from '../screens/user/SettingScreen';
 import DiscoveryScreen from '../screens/discovery/DiscoveryScreen';
 import SearchStack from './SearchStack';
 import SettingStackNavigator from './SettingStackNavigator';
+import HomeStack from './HomeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,11 +41,21 @@ export default function CustomerTabNavigator() {
             case 'Sách của tôi':
               iconName = 'book-outline';
               break;
+            case 'Khám Phá':
+              iconName = 'compass-outline'; // biểu tượng khám phá
+              break;
+            case 'Tìm Kiếm':
+              iconName = 'search-outline'; // biểu tượng tìm kiếm
+              break;
+            default:
+              iconName = 'ellipse-outline'; // fallback icon
           }
           return <Icon name={iconName} size={size} color={color} />;
         },
+
         tabBarStyle: {
           position: 'absolute',
+          bottom: 20,
           marginLeft: 18,
           marginRight: 18,
           elevation: 5,
@@ -71,11 +82,11 @@ export default function CustomerTabNavigator() {
         },
       })}
     >
-      <Tab.Screen name="Trang Chủ" component={HomeScreen} />
+      <Tab.Screen name="Trang Chủ" component={HomeStack} />
       <Tab.Screen name="Sách của tôi" component={LibraryScreen} />
       <Tab.Screen name="Khám Phá" component={DiscoveryScreen} />
       <Tab.Screen name="Tìm Kiếm" component={SearchStack} />
-      <Tab.Screen name="Cài đặt" component={SettingStackNavigator}/>
+      <Tab.Screen name="Cài đặt" component={SettingStackNavigator} />
     </Tab.Navigator>
   );
 }

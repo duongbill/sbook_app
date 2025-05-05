@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   TouchableWithoutFeedback,
+  SafeAreaView,
 } from "react-native";
 import { ThemeContext } from "../../context/ThemeContext";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -86,14 +87,20 @@ const LibraryScreen = () => {
         <Text style={[styles.bookProgressLabe, { color: theme.colors.text }]}>
           Đã đọc được: {item.progress}%
         </Text>
+
+        <Text
+          style={[
+            styles.bookProgressLabel,
+            { color: theme.colors.textSecondary },
+          ]}
+        >
+          Đã đọc được: {item.progress}%
+        </Text>
         <View style={styles.progressBarBackground}>
           <View
             style={[
               styles.progressBar,
-              {
-                width: `${item.progress}%`,
-                backgroundColor: theme.colors.buttonOrange,
-              },
+              { width: `${item.progress}%`, backgroundColor: "rgb(255,204,0)" },
             ]}
           />
         </View>
@@ -144,19 +151,21 @@ const LibraryScreen = () => {
               style={[
                 styles.tab,
                 { color: theme.colors.text },
+
                 selectedTab === tab.key && [
                   styles.activeTab,
-                  { color: theme.colors.buttonOrange },
+                  { color: theme.colors.text },
                 ],
               ]}
             >
               {tab.label}
             </Text>
+
             {selectedTab === tab.key && (
               <View
                 style={[
                   styles.underline,
-                  { backgroundColor: theme.colors.buttonOrange },
+                  { backgroundColor: theme.colors.textSecondary },
                 ]}
               />
             )}
@@ -190,6 +199,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fef7e6",
     padding: 20,
+    paddingTop: 40,
   },
   header: {
     flexDirection: "row",
