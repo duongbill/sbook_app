@@ -9,6 +9,7 @@ import {
   Modal,
   Linking,
   StatusBar,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -88,89 +89,109 @@ const SettingScreen = () => {
           </View>
         </View>
 
-        {/* Setting items */}
-        {settings.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[styles.item, { borderBottomColor: theme.colors.text }]}
-            onPress={() => {
-              if (item.label === "Đăng xuất") {
-                handleLogout();
-                console.log("Logged out");
-              } else if (item.label === "Chế độ tối") {
-                navigation.navigate("Mode");
-              } else if (item.label === "Thông tin cá nhân") {
-                // Sử dụng CommonActions để điều hướng chính xác trong navigator lồng nhau
-                navigation.dispatch(
-                  CommonActions.navigate({
-                    name: "Info",
-                  })
-                );
-                console.log("Navigating to Info screen");
-              } else if (item.label === "Đổi mật khẩu") {
-                // Điều hướng đến màn hình đổi mật khẩu
-                navigation.dispatch(
-                  CommonActions.navigate({
-                    name: "ChangePassword",
-                  })
-                );
-                console.log("Navigating to ChangePassword screen");
-              } else if (item.label === "Ngôn ngữ") {
-                // Điều hướng đến màn hình ngôn ngữ
-                navigation.dispatch(
-                  CommonActions.navigate({
-                    name: "Language",
-                  })
-                );
-                console.log("Navigating to Language screen");
-              } else if (item.label === "Vòng quay may mắn") {
-                // Điều hướng đến màn hình vòng quay may mắn
-                navigation.dispatch(
-                  CommonActions.navigate({
-                    name: "GachaScreen",
-                  })
-                );
-                console.log("Navigating to GachaScreen");
-              } else if (item.label === "Bảo mật") {
-                // Điều hướng đến màn hình chính sách bảo mật
-                navigation.dispatch(
-                  CommonActions.navigate({
-                    name: "SecurityPolicy",
-                  })
-                );
-                console.log("Navigating to SecurityPolicy screen");
-              } else if (item.label === "Ví của tôi") {
-                // Điều hướng đến màn hình ví của tôi
-                navigation.dispatch(
-                  CommonActions.navigate({
-                    name: "MyWallet",
-                  })
-                );
-                console.log("Navigating to MyWallet screen");
-              } else if (item.label === "Hỗ trợ từ kỹ thuật viên") {
-                // Hiển thị modal số kỹ thuật viên
-                setSupportModalVisible(true);
-                console.log("Showing tech support modal");
-              } else {
-                navigation.navigate("Setting");
-              }
-            }}
-          >
-            <View style={styles.iconLabel}>
-              <View style={[styles.icon, { borderColor: theme.colors.text }]}>
-                <Icon
-                  name={item.icon}
-                  size={20}
-                  style={[{ color: theme.colors.text }]}
-                />
+        {/* Setting items in ScrollView */}
+        <ScrollView
+          style={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+          bounces={false}
+        >
+          {settings.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.item,
+                {
+                  borderBottomColor: theme.colors.text,
+                  // Thêm marginBottom cho item cuối cùng
+                  ...(index === settings.length - 1
+                    ? { marginBottom: 20 }
+                    : {}),
+                },
+              ]}
+              onPress={() => {
+                if (item.label === "Đăng xuất") {
+                  handleLogout();
+                  console.log("Logged out");
+                } else if (item.label === "Chế độ tối") {
+                  navigation.navigate("Mode");
+                } else if (item.label === "Thông tin cá nhân") {
+                  // Sử dụng CommonActions để điều hướng chính xác trong navigator lồng nhau
+                  navigation.dispatch(
+                    CommonActions.navigate({
+                      name: "Info",
+                    })
+                  );
+                  console.log("Navigating to Info screen");
+                } else if (item.label === "Đổi mật khẩu") {
+                  // Điều hướng đến màn hình đổi mật khẩu
+                  navigation.dispatch(
+                    CommonActions.navigate({
+                      name: "ChangePassword",
+                    })
+                  );
+                  console.log("Navigating to ChangePassword screen");
+                } else if (item.label === "Ngôn ngữ") {
+                  // Điều hướng đến màn hình ngôn ngữ
+                  navigation.dispatch(
+                    CommonActions.navigate({
+                      name: "Language",
+                    })
+                  );
+                  console.log("Navigating to Language screen");
+                } else if (item.label === "Vòng quay may mắn") {
+                  // Điều hướng đến màn hình vòng quay may mắn
+                  navigation.dispatch(
+                    CommonActions.navigate({
+                      name: "GachaScreen",
+                    })
+                  );
+                  console.log("Navigating to GachaScreen");
+                } else if (item.label === "Bảo mật") {
+                  // Điều hướng đến màn hình chính sách bảo mật
+                  navigation.dispatch(
+                    CommonActions.navigate({
+                      name: "SecurityPolicy",
+                    })
+                  );
+                  console.log("Navigating to SecurityPolicy screen");
+                } else if (item.label === "Ví của tôi") {
+                  // Điều hướng đến màn hình ví của tôi
+                  navigation.dispatch(
+                    CommonActions.navigate({
+                      name: "MyWallet",
+                    })
+                  );
+                  console.log("Navigating to MyWallet screen");
+                } else if (item.label === "Hỗ trợ từ kỹ thuật viên") {
+                  // Hiển thị modal số kỹ thuật viên
+                  setSupportModalVisible(true);
+                  console.log("Showing tech support modal");
+                } else {
+                  navigation.navigate("Setting");
+                }
+              }}
+            >
+              <View style={styles.iconLabel}>
+                <View style={[styles.icon, { borderColor: theme.colors.text }]}>
+                  <Icon
+                    name={item.icon}
+                    size={20}
+                    style={[{ color: theme.colors.text }]}
+                  />
+                </View>
+                <Text style={[styles.label, { color: theme.colors.text }]}>
+                  {item.label}
+                </Text>
               </View>
-              <Text style={[styles.label, { color: theme.colors.text }]}>
-                {item.label}
-              </Text>
-            </View>
-            <Icon name="chevron-forward" size={20} color={theme.colors.text} />
-          </TouchableOpacity>
-        ))}
+              <Icon
+                name="chevron-forward"
+                size={20}
+                color={theme.colors.text}
+              />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
 
       {/* Modal hiển thị số kỹ thuật viên */}
@@ -222,6 +243,7 @@ const SettingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 10, // Thêm padding bottom cho container chính
   },
   containerTab: {
     flex: 1,
@@ -230,7 +252,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginLeft: 18,
     marginRight: 18,
-    marginBottom: 10,
+    marginBottom: 20, // Tăng margin bottom
+    paddingBottom: 10, // Thêm padding bottom
+  },
+  scrollContainer: {
+    width: "100%",
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 80, // Tăng padding bottom để tránh bị đè bởi bottom navigation
   },
   profileContainer: {
     borderRadius: 12,
@@ -279,9 +309,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 14,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     marginLeft: 15,
     marginRight: 15,
+    width: "100%",
   },
   iconLabel: {
     flex: 1,
