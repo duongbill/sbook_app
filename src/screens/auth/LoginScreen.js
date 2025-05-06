@@ -44,7 +44,6 @@ export default function LoginScreen() {
     }
   };
 
-
   const toggleRememberMe = () => {
     setRememberMe(!rememberMe);
   };
@@ -134,8 +133,8 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: "center",
-    marginTop: 30,
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 0,
   },
   logo: {
     width: 200,
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f0f0f0",
     borderRadius: 8,
-    marginBottom: 15,
+    marginBottom: 10,
   },
   passwordInput: {
     flex: 1,
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 30,
+    marginBottom: 10,
   },
   checkboxContainer: {
     flexDirection: "row",
@@ -213,7 +212,7 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: "center",
     marginTop: 10,
-    marginBottom: 100,
+    marginBottom: 50,
   },
   loginButtonText: {
     color: "#fff",

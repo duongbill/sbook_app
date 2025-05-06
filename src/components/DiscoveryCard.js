@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     margin: 20,
-    width: 370,
-    height: 160,
+    width: 300,
+    height: 165,
     paddingRight: 130, // đẩy text sang phải tránh ảnh
     paddingVertical: 20,
     position: "relative", // cần để ảnh position absolute bám theo
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     position: "absolute",
     top: -20, // đẩy ảnh lên khỏi card
-    left: 260, // đẩy ảnh sang trái khỏi card
+    left: 180, // đẩy ảnh sang trái khỏi card
   },
 
   textContainer: {
@@ -82,13 +82,13 @@ const styles = StyleSheet.create({
   },
   title: {
     marginLeft: 10,
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
   },
   description: {
     marginLeft: 10,
-    fontSize: 14,
+    fontSize: 12,
   },
 });
 
